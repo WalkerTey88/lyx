@@ -130,14 +130,18 @@ header .logo{
 <body>
 <header>
   <div class="head">
-    <!-- 放 logo.png 即会显示；没有则隐藏 -->
-    <img src="logo.png" alt="logo" class="logo" onerror="this.style.display='none'">
-    <h1 class="head">
-  <img src="logo.png" alt="LYX Logo" class="logo">
-  <span id="title-main" style="display:none"></span>
-  <small id="title-sub" style="display:none"></small>
-</h1>
-    <div class="lang">
+    <!-- 只保留这一张 logo，固定高72、最大宽240 -->
+    <img src="logo.png" alt="LYX Logo" class="logo" 
+         style="height:72px;width:auto;max-width:240px;display:block;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,.25);" 
+         onerror="this.style.display='none'">
+
+    <!-- 标题文字节点保留但隐藏，避免脚本 set textContent 报错 -->
+    <h1 class="brand" style="margin:0;display:none;">
+      <span id="title-main"></span>
+      <small id="title-sub"></small>
+    </h1>
+
+    <div class="lang" style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap">
       <button id="btn-zh" class="active">中文</button>
       <button id="btn-en">English</button>
       <button id="btn-vi">Tiếng Việt</button>
