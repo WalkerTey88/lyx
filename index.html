@@ -6,7 +6,7 @@
 <title>龍運轩ᝰ美食中心 · LYX Food Center</title>
 <meta name="color-scheme" content="light">
 <style>
-/* ============== 红包风主题（红底 / 红按钮白字 / 金线） ============== */
+/* ============== 红包风主题（红底 / 金色按钮 / 金线） ============== */
 :root{
   --bg:#9b0b14;             /* 整体大红（背景） */
   --bg-deep:#7e0810;        /* 深红（渐变用） */
@@ -14,9 +14,8 @@
   --ink:#ffffff;            /* 主文字白 */
   --mut:#ffeecf;            /* 次要文字（金米白） */
   --line:#f1d27a;           /* 金色线条 */
---brand:#f2c84b;     /* 主按钮=金色 */
---brand-ink:#5a3b00; /* 金色按钮上的字=深棕 */
---ok:#f2c84b;        /* 主行动按钮=金色 */
+  --brand:#f2c84b;          /* 主按钮=金色 */
+  --brand-ink:#5a3b00;      /* 金色按钮上的字=深棕 */
   --accent:#ffd86b;         /* 柔金 */
   --shadow:0 10px 28px rgba(0,0,0,.18);
   --ring:0 0 0 3px rgba(242,200,75,.25);
@@ -26,7 +25,7 @@ html,body{margin:0;background:linear-gradient(180deg,var(--bg),var(--bg-deep));c
 a{text-decoration:none;color:inherit}
 .wrap{max-width:1200px;margin:20px auto;padding:0 12px 24px}
 
-/* ---- 顶部：只留一个 logo（72x<=240）+ 语言切换 ---- */
+/* ---- 顶部：logo + 语言 ---- */
 header{
   position:sticky;top:0;z-index:9;
   padding:12px 16px;color:#fff;
@@ -39,7 +38,7 @@ header .logo{
   height:72px; width:auto; max-width:240px; display:block;
   border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,.25);
 }
-h1{margin:0;font-size:20px;letter-spacing:.5px;display:none} /* 隐藏标题节点，但保留 DOM 供脚本赋值 */
+h1{margin:0;font-size:20px;letter-spacing:.5px;display:none}
 h1 small{opacity:.9;color:var(--mut)}
 .lang{display:flex;gap:8px;margin-left:auto;flex-wrap:wrap}
 .lang button{
@@ -57,17 +56,20 @@ h1 small{opacity:.9;color:var(--mut)}
 .panel h3{margin:0;padding:14px 16px;border-bottom:1.5px dashed var(--line);font-size:16px;display:flex;align-items:center;gap:8px}
 .section{padding:12px 12px 18px}
 
+/* ---- 控件 ---- */
 .controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:0 6px 10px}
 .label{font-weight:900;color:var(--mut)}
 .input{
   padding:10px;border:1.5px solid var(--line);border-radius:12px;min-width:140px;
-  background:rgba(255,255,255,.08);color:var(--ink)
+  background:rgba(255,255,255,.08);
+  color:#fff;                         /* 白字 */
+  font-weight:900;                    /* 加粗 */
 }
-.input::placeholder{color:#ffefcfaa}
+.input::placeholder{color:#ffffffcc;font-weight:900}
 .input:focus{outline:none;box-shadow:var(--ring);border-color:var(--accent)}
 .switch{display:flex;gap:8px;align-items:center;border:1.5px solid var(--line);border-radius:12px;padding:8px 10px;background:rgba(255,255,255,.06)}
 
-/* 分类整块金色卡片（未展开/展开都保持） */
+/* ---- 分类：统一金色标题卡片（深棕字） ---- */
 details{
   background:linear-gradient(180deg,#ffe38a,#f2c84b);
   border:1.5px solid #e7c14b;
@@ -79,12 +81,9 @@ summary{
   list-style:none; cursor:pointer;
   padding:12px 14px; border-radius:14px;
   display:flex; justify-content:space-between; align-items:center; font-weight:900;
-  background:transparent;            /* 让整块看上去是一体的金色 */
-  border-left:0;                     /* 不要左侧彩条 */
+  background:transparent;
 }
 summary::marker,summary::-webkit-details-marker{display:none}
-
-/* 左侧分类标题=深棕，右侧提示=深棕（和截图一致） */
 summary > span:first-child{ color:#5a3b00; font-weight:900; }
 .cat-sub{ color:#5a3b00; font-weight:700; font-size:12px; opacity:.95; }
 
@@ -101,30 +100,49 @@ summary > span:first-child{ color:#5a3b00; font-weight:900; }
 .sub{color:var(--mut);font-size:12px;line-height:1.25}
 .qty{min-width:56px;text-align:center;font-weight:900;color:#fff}
 
+/* ---- 按钮：全站统一贵气金色 ---- */
 .btn{
-  padding:10px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--brand);cursor:pointer;
-  font-weight:900;letter-spacing:.2px;color:var(--brand-ink);box-shadow:inset 0 -2px 0 rgba(0,0,0,.12)
+  padding:10px 14px;border-radius:12px;cursor:pointer;font-weight:900;letter-spacing:.2px;
+  border:1.5px solid #e7c14b;
+  background:linear-gradient(180deg,#ffe38a,#f2c84b);
+  color:var(--brand-ink);
+  box-shadow:inset 0 -2px 0 rgba(0,0,0,.12);
+  transition:transform .05s ease, filter .12s ease, box-shadow .12s ease;
 }
-.btn.small{padding:10px 14px;font-size:18px;border-width:2px}
-.btn.add{background:var(--brand)}
-.tools .btn{min-width:140px;text-align:center}
-body{color-scheme: light;}
+.btn:hover{filter:saturate(106%) brightness(1.02)}
+.btn:active{transform:translateY(1px);box-shadow:inset 0 2px 0 rgba(0,0,0,.12)}
+.btn:disabled{
+  background:linear-gradient(180deg,#ffe38a,#f2c84b); /* 仍保持金色，不变灰 */
+  color:var(--brand-ink);
+  opacity:1; filter:none; cursor:not-allowed;
+  border-color:#e7c14b;
+}
 
+.btn.small{padding:10px 14px;font-size:18px;border-width:2px}
+.btn.add{}
+
+/* 工具按钮保持金色主调 */
+.tools .btn{min-width:140px;text-align:center}
+
+body{color-scheme: light;}
 .sticky{position:sticky;top:86px}
 .sumrow{display:flex;gap:10px;margin-top:10px}
+
+/* 打印 & 完成 都是金色（避免任何“灰”） */
 .sumrow .btn.print{
-  flex:1;background:transparent;border-style:dashed;color:#fff
-}.sumrow .btn.done{
-  flex:3;
-  background:linear-gradient(180deg,#ffe38a,#f2c84b);
-  border-color:#e7c14b;
-  color:#5a3b00;
+  flex:1;
 }
+.sumrow .btn.done{
+  flex:3;
+}
+
+/* 备注：加粗白字 */
 .note{
   width:100%;min-height:68px;border:1.5px solid var(--line);border-radius:12px;padding:10px;margin-top:10px;
-  background:rgba(255,255,255,.06);color:#fff
+  background:rgba(255,255,255,.06);color:#fff;font-weight:900;
 }
-.note::placeholder{color:#ffefcfaa}
+.note::placeholder{color:#ffffffcc;font-weight:900}
+
 .sum{border-top:1.5px dashed var(--line);padding-top:10px;margin-top:10px}
 
 .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
@@ -139,9 +157,7 @@ body{color-scheme: light;}
 <body>
 <header>
   <div class="head">
-    <!-- 只保留这一张 logo，固定高72、最大宽240 -->
     <img src="logo.png" alt="LYX Logo" class="logo" onerror="this.style.display='none'">
-    <!-- 标题节点保留但隐藏，供脚本 set textContent 使用（不再显示第二个 logo） -->
     <h1>
       <span id="title-main"></span>
       <small id="title-sub"></small>
@@ -293,16 +309,13 @@ const I18N = {
       time:"Thời gian",type:"Loại",
       csv_time:"Thời gian",csv_table:"Bàn",csv_type:"Loại",csv_items:"Món",csv_total:"Tổng",csv_note:"Ghi chú"}
   },
-  // 菜名翻译（未列出的用中文名）
   items:{
-    /* 1) WONTON */
     w_small:{en:"Wonton Noodles (S)",vi:"Mì hoành thánh (Nhỏ)"},
     w_mid:{en:"Wonton Noodles (M)",vi:"Mì hoành thánh (Vừa)"},
     w_big:{en:"Wonton Noodles (L)",vi:"Mì hoành thánh (Lớn)"},
     w_wantan_dry:{en:"Wontons (Dry, per portion)",vi:"Hoành thánh khô (1 phần)"},
     w_wantan_soup:{en:"Wontons (Soup, per portion)",vi:"Hoành thánh nước (1 phần)"},
     w_add3:{en:"Add-on: 3 Wontons",vi:"Thêm: 3 hoành thánh"},
-    /* 2) DRINKS */
     d_coffee_hot:{en:"Coffee (Hot)",vi:"Cà phê (Nóng)"},
     d_coffee_ice:{en:"Coffee (Iced)",vi:"Cà phê (Đá)"},
     d_coffeeC_hot:{en:"Coffee C (Hot)",vi:"Cà phê C (Nóng)"},
@@ -322,7 +335,6 @@ const I18N = {
     d_miloO_hot:{en:"Milo O (Hot)",vi:"Milo O (Nóng)"},
     d_miloO_ice:{en:"Milo O (Iced)",vi:"Milo O (Đá)"},
     d_canned:{en:"Canned Water",vi:"Nước lon"},
-    /* 3) Auntie 主食 + 加料 */
     a_bitter_rice_noodle:{en:"Bitter Gourd Bee Hoon",vi:"Bún khổ qua"},
     a_nasi_ayam:{en:"Nasi Lemak (Chicken)",vi:"Nasi Lemak (gà)"},
     a_nasi_egg:{en:"Nasi Lemak (Egg only)",vi:"Nasi Lemak (trứng)"},
@@ -340,7 +352,6 @@ const I18N = {
     a_add_pickled_tofu:{en:"Pickled Tofu (add-on)",vi:"Đậu phụ chua (thêm)"},
     a_add_wing:{en:"Fried Chicken Wing",vi:"Cánh gà chiên"},
     a_add_fried_egg:{en:"Fried Egg",vi:"Trứng ốp la"},
-    /* 4) Guangxi */
     gx_su:{en:"Plain Rice Roll (kosong)",vi:"Bánh cuốn trơn (kosong)"},
     gx_veg:{en:"Veg Rice Roll",vi:"Bánh cuốn rau"},
     gx_meatveg:{en:"Meat + Veg Rice Roll",vi:"Bánh cuốn thịt + rau"},
@@ -353,98 +364,35 @@ const I18N = {
 function t(k){return I18N.ui[LANG][k]||k;}
 function tItemName(id,fallback){return I18N.items[id]?.[LANG]||fallback;}
 
-/* ====== Cloud Sync 配置（填入你的值） ====== */
+/* ====== Cloud Sync（保留你的原样配置占位） ====== */
 const CLOUD = {
-  ENDPOINT: 'https://script.google.com/macros/s/XXXXXXXXXXXXXXXXXXXX/exec', // TODO: 你的 Apps Script Web 应用 URL
-  SECRET: 'Lyx115599$api',  // TODO: 若 Apps Script 里设置了 LYX_SECRET，要与之匹配
-  SPREADSHEET_ID: 'YOUR_SPREADSHEET_ID' // TODO: 你的 Google 表格ID（如果 WebApp 就建在该表里，可留空）
+  ENDPOINT: 'https://script.google.com/macros/s/XXXXXXXXXXXXXXXXXXXX/exec',
+  SECRET: 'Lyx115599$api',
+  SPREADSHEET_ID: 'YOUR_SPREADSHEET_ID'
 };
-// 设备ID（本机持久）
 function getDeviceId(){
   const k='lyx_device_id';
   let v=localStorage.getItem(k);
   if(!v){ v='dev_'+Math.random().toString(36).slice(2); localStorage.setItem(k,v); }
   return v;
 }
-// 云端发送
 async function sendToCloud(payload){
   try{
-    const res = await fetch(CLOUD.ENDPOINT, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify(payload)
-    });
+    const res = await fetch(CLOUD.ENDPOINT, {method:'POST',headers:{'Content-Type':'application/json'},body: JSON.stringify(payload)});
     const j = await res.json().catch(()=>({ok:false, error:'bad_json'}));
     return j && j.ok;
-  }catch(e){
-    console.warn('cloud failed', e);
-    return false;
-  }
+  }catch(e){ console.warn('cloud failed', e); return false; }
 }
 
-/* ========= 菜单数据 ========= */
-const WONTON=[
-  {id:"w_small", name:"云吞面（小）", price:6.50},
-  {id:"w_mid",   name:"云吞面（中）", price:7.50},
-  {id:"w_big",   name:"云吞面（大）", price:8.50},
-  {id:"w_wantan_dry",  name:"云吞 干捞（一份）", price:5.00},
-  {id:"w_wantan_soup", name:"云吞 汤（一份）",   price:5.00},
-  {id:"w_add3",        name:"加料：云吞 ×3",     price:1.00},
-];
-const DRINKS=[
-  {id:"d_coffee_hot",   name:"咖啡（热）",   price:2.30},
-  {id:"d_coffee_ice",   name:"咖啡（冰）",   price:2.50},
-  {id:"d_coffeeC_hot",  name:"咖啡C（热）",  price:2.50},
-  {id:"d_coffeeC_ice",  name:"咖啡C（冰）",  price:2.70},
-  {id:"d_coffeeO_hot",  name:"咖啡O（热）",  price:2.00},
-  {id:"d_coffeeO_ice",  name:"咖啡O（冰）",  price:2.20},
-  {id:"d_milktea_hot",  name:"奶茶（热）",   price:2.30},
-  {id:"d_milktea_ice",  name:"奶茶（冰）",   price:2.50},
-  {id:"d_milkteaC_hot", name:"奶茶C（热）",  price:2.50},
-  {id:"d_milkteaC_ice", name:"奶茶C（冰）",  price:2.70},
-  {id:"d_milkteaSC_hot",name:"奶茶咸C（热）",price:2.50},
-  {id:"d_milkteaSC_ice",name:"奶茶咸C（冰）",price:2.70},
-  {id:"d_milo_hot",     name:"Milo（热）",   price:2.60},
-  {id:"d_milo_ice",     name:"Milo（冰）",   price:2.80},
-  {id:"d_miloC_hot",    name:"Milo C（热）", price:2.80},
-  {id:"d_miloC_ice",    name:"Milo C（冰）", price:3.00},
-  {id:"d_miloO_hot",    name:"Milo O（热）", price:2.60},
-  {id:"d_miloO_ice",    name:"Milo O（冰）", price:2.80},
-  {id:"d_canned",       name:"罐装水",       price:3.00},
-];
-const AUNTIE=[
-  {id:"a_bitter_rice_noodle", name:"苦瓜米粉",           price:6.00},
-  {id:"a_nasi_ayam",          name:"Nasi Lemak（有鸡肉）", price:6.00},
-  {id:"a_nasi_egg",           name:"Nasi Lemak（只有鸡蛋）", price:3.00},
-  {id:"a_pan_mee",            name:"面粉糕",             price:6.00},
-  {id:"a_braised_rice",       name:"红烧饭",             price:6.00},
-  {id:"a_congee_pork",        name:"鱼粥（猪肉）",        price:6.00},
-  {id:"a_congee_chicken",     name:"鱼粥（鸡肉）",        price:6.00},
-  {id:"a_mianxian",           name:"面线",               price:6.00},
-  {id:"a_lu_rou_fan",         name:"卤肉饭",             price:6.00},
-  {id:"a_kuey_teow_soup",     name:"果条汤",             price:6.00},
-  // 加料
-  {id:"a_add_century_egg",       name:"加皮蛋",     price:1.00},
-  {id:"a_add_pickled_cucumber",  name:"酸笋瓜",     price:1.50},
-  {id:"a_add_pickled_okra",      name:"酸羊角豆",   price:1.50},
-  {id:"a_add_pickled_bitter",    name:"酸苦瓜",     price:1.50},
-  {id:"a_add_pickled_tofu",      name:"酸豆腐",     price:1.50},
-  {id:"a_add_wing",              name:"炸鸡翅膀",   price:3.00},
-  {id:"a_add_fried_egg",         name:"煎鸡蛋",     price:1.00},
-];
-const GUANGXI=[
-  {id:"gx_su",      name:"素粉(kosong)",   price:1.00},
-  {id:"gx_veg",     name:"蔬菜卷筒粉",     price:2.00},
-  {id:"gx_meatveg", name:"菜加肉卷筒粉",   price:3.00},
-  {id:"gx_meat",    name:"肉卷筒粉",       price:3.00},
-  {id:"gx_full",    name:"全家福卷筒粉",   price:4.00},
-  {id:"gx_spring",  name:"春卷",           price:1.00},
-  {id:"gx_taro",    name:"芋头米糕",       price:1.00},
-];
+/* ========= 菜单数据（保持原样） ========= */
+const WONTON=[{id:"w_small",name:"云吞面（小）",price:6.50},{id:"w_mid",name:"云吞面（中）",price:7.50},{id:"w_big",name:"云吞面（大）",price:8.50},{id:"w_wantan_dry",name:"云吞 干捞（一份）",price:5.00},{id:"w_wantan_soup",name:"云吞 汤（一份）",price:5.00},{id:"w_add3",name:"加料：云吞 ×3",price:1.00},];
+const DRINKS=[{id:"d_coffee_hot",name:"咖啡（热）",price:2.30},{id:"d_coffee_ice",name:"咖啡（冰）",price:2.50},{id:"d_coffeeC_hot",name:"咖啡C（热）",price:2.50},{id:"d_coffeeC_ice",name:"咖啡C（冰）",price:2.70},{id:"d_coffeeO_hot",name:"咖啡O（热）",price:2.00},{id:"d_coffeeO_ice",name:"咖啡O（冰）",price:2.20},{id:"d_milktea_hot",name:"奶茶（热）",price:2.30},{id:"d_milktea_ice",name:"奶茶（冰）",price:2.50},{id:"d_milkteaC_hot",name:"奶茶C（热）",price:2.50},{id:"d_milkteaC_ice",name:"奶茶C（冰）",price:2.70},{id:"d_milkteaSC_hot",name:"奶茶咸C（热）",price:2.50},{id:"d_milkteaSC_ice",name:"奶茶咸C（冰）",price:2.70},{id:"d_milo_hot",name:"Milo（热）",price:2.60},{id:"d_milo_ice",name:"Milo（冰）",price:2.80},{id:"d_miloC_hot",name:"Milo C（热）",price:2.80},{id:"d_miloC_ice",name:"Milo C（冰）",price:3.00},{id:"d_miloO_hot",name:"Milo O（热）",price:2.60},{id:"d_miloO_ice",name:"Milo O（冰）",price:2.80},{id:"d_canned",name:"罐装水",price:3.00},];
+const AUNTIE=[{id:"a_bitter_rice_noodle",name:"苦瓜米粉",price:6.00},{id:"a_nasi_ayam",name:"Nasi Lemak（有鸡肉）",price:6.00},{id:"a_nasi_egg",name:"Nasi Lemak（只有鸡蛋）",price:3.00},{id:"a_pan_mee",name:"面粉糕",price:6.00},{id:"a_braised_rice",name:"红烧饭",price:6.00},{id:"a_congee_pork",name:"鱼粥（猪肉）",price:6.00},{id:"a_congee_chicken",name:"鱼粥（鸡肉）",price:6.00},{id:"a_mianxian",name:"面线",price:6.00},{id:"a_lu_rou_fan",name:"卤肉饭",price:6.00},{id:"a_kuey_teow_soup",name:"果条汤",price:6.00},{id:"a_add_century_egg",name:"加皮蛋",price:1.00},{id:"a_add_pickled_cucumber",name:"酸笋瓜",price:1.50},{id:"a_add_pickled_okra",name:"酸羊角豆",price:1.50},{id:"a_add_pickled_bitter",name:"酸苦瓜",price:1.50},{id:"a_add_pickled_tofu",name:"酸豆腐",price:1.50},{id:"a_add_wing",name:"炸鸡翅膀",price:3.00},{id:"a_add_fried_egg",name:"煎鸡蛋",price:1.00},];
+const GUANGXI=[{id:"gx_su",name:"素粉(kosong)",price:1.00},{id:"gx_veg",name:"蔬菜卷筒粉",price:2.00},{id:"gx_meatveg",name:"菜加肉卷筒粉",price:3.00},{id:"gx_meat",name:"肉卷筒粉",price:3.00},{id:"gx_full",name:"全家福卷筒粉",price:4.00},{id:"gx_spring",name:"春卷",price:1.00},{id:"gx_taro",name:"芋头米糕",price:1.00},];
 const ALL=[...WONTON,...DRINKS,...AUNTIE,...GUANGXI];
 
 /* ========= 渲染 ========= */
-const cart={}; // {id: qty}
+const cart={};
 function itemCard(it){
   const displayName=tItemName(it.id,it.name);
   return `
@@ -468,7 +416,6 @@ function renderCategory(elId,list){
   el.innerHTML=list.map(itemCard).join("");
 }
 function renderAll(){
-  // 文案
   document.getElementById('title-main').textContent=t('title_main');
   document.getElementById('title-sub').textContent=t('title_sub');
   document.getElementById('panel-order').textContent=t('order');
@@ -487,7 +434,6 @@ function renderAll(){
   document.getElementById('btn-del').textContent=t('tool_del');
   document.getElementById('note').placeholder=t('note_ph');
 
-  // 分类标题
   document.getElementById('sum-wonton').textContent=t('cat_wonton');
   document.getElementById('tip-wonton').textContent=t('cat_wonton_tip');
   document.getElementById('sum-drinks').textContent=t('cat_drinks');
@@ -497,7 +443,6 @@ function renderAll(){
   document.getElementById('sum-gx').textContent=t('cat_gx');
   document.getElementById('tip-gx').textContent=t('cat_gx_tip');
 
-  // 菜单卡片
   renderCategory("cat-wonton", WONTON);
   renderCategory("cat-drinks", DRINKS);
   renderCategory("cat-auntie", AUNTIE);
@@ -525,11 +470,7 @@ function renderCart(){
 
 /* ========= 本地统计 ========= */
 function todayKey(){
-  // 固定按马来西亚时区划分“今天”，避免不同手机时差导致看不到今天数据
-  const fmt = new Intl.DateTimeFormat('en-CA', {
-    timeZone: 'Asia/Kuala_Lumpur',
-    year: 'numeric', month: '2-digit', day: '2-digit'
-  });
+  const fmt = new Intl.DateTimeFormat('en-CA', {timeZone:'Asia/Kuala_Lumpur',year:'numeric',month:'2-digit',day:'2-digit'});
   const parts = fmt.formatToParts(new Date()).reduce((a,p)=>{a[p.type]=p.value;return a;}, {});
   return `lyx_stats_${parts.year}-${parts.month}-${parts.day}`;
 }
@@ -553,7 +494,6 @@ function finishAndSend(){
   const type  = document.getElementById('takeaway').checked ? t('takeaway') : t('dinein');
   const note  = (document.getElementById('note').value||"").trim();
 
-  // 计算本单
   let subtotal=0, itemsCount=0, lines=[], itemsArr=[];
   Object.keys(cart).forEach(id=>{
     const qty=cart[id]; itemsCount+=qty;
@@ -562,7 +502,6 @@ function finishAndSend(){
     itemsArr.push({id, qty, amount:+lineAmt.toFixed(2)});
   });
 
-  // 写统计（总体+分类）
   const st=loadStats();
   st.orders += 1; st.items += itemsCount; st.sales = +(st.sales + subtotal).toFixed(2);
   const catMap={
@@ -580,7 +519,6 @@ function finishAndSend(){
   st.list.push({time:new Date().toLocaleString(), table, type, lines, items_struct:itemsArr, total:subtotal, note});
   saveStats(st);
 
-  // —— 先提示本机已保存，然后尝试上云（不阻塞收银）
   alert(`已保存到本机统计。\\n订单笔数：${st.orders}，销售额：RM ${st.sales.toFixed(2)}。\\n将尝试上传到云端…`);
   const cloudPayload = {
     secret: CLOUD.SECRET || '',
@@ -595,7 +533,6 @@ function finishAndSend(){
     if(!ok){ alert('云端上传失败（网络/权限）。本机已保存，稍后再试。'); }
   });
 
-  // 组合消息 → 打开 WhatsApp（外链 & 兜底 Scheme）
   const NL = "\\n";
   const msg = [
     `${t('title_main')} 订单`,
@@ -610,7 +547,6 @@ function finishAndSend(){
   if(!opened){ location.href=url; }
   setTimeout(()=>{ try{ location.href = "whatsapp://send?text=" + encodeURIComponent(msg); }catch(e){} },600);
 
-  // 清空购物车
   for(const k in cart) delete cart[k];
   renderCart(); showKpis();
 }
@@ -691,7 +627,7 @@ function deleteWithPwd(){
   showKpis(); alert("已清空今天统计");
 }
 
-/* ========= 语言按钮 / 事件绑定（稳固） ========= */
+/* ========= 语言按钮 / 事件绑定 ========= */
 function setLang(next){
   LANG = next;
   document.getElementById('btn-zh').classList.toggle('active', next==='zh');
