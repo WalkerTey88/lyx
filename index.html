@@ -6,7 +6,7 @@
 <title>龍運轩ᝰ美食中心 · LYX Food Center</title>
 <meta name="color-scheme" content="light">
 <style>
-/* ============== 红包风主题（红底 / 金按钮 / 白字 / 金线） ============== */
+/* ============== 红包风主题（红底 / 红按钮白字 / 金线） ============== */
 :root{
   --bg:#9b0b14;             /* 整体大红（背景） */
   --bg-deep:#7e0810;        /* 深红（渐变用） */
@@ -14,9 +14,9 @@
   --ink:#ffffff;            /* 主文字白 */
   --mut:#ffeecf;            /* 次要文字（金米白） */
   --line:#f1d27a;           /* 金色线条 */
-  --brand:#f2c84b;          /* 金色主按钮 */
-  --brand-ink:#5a3b00;      /* 金色按钮上的字（深棕） */
-  --ok:#f2c84b;             /* 主行动按钮也用金色 */
+  --brand:#b70e18;          /* 按钮红 */
+  --brand-ink:#ffffff;      /* 按钮字白 */
+  --ok:#b70e18;             /* 主行动按钮仍用红色 */
   --accent:#ffd86b;         /* 柔金 */
   --shadow:0 10px 28px rgba(0,0,0,.18);
   --ring:0 0 0 3px rgba(242,200,75,.25);
@@ -25,6 +25,8 @@
 html,body{margin:0;background:linear-gradient(180deg,var(--bg),var(--bg-deep));color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
 a{text-decoration:none;color:inherit}
 .wrap{max-width:1200px;margin:20px auto;padding:0 12px 24px}
+
+/* ---- 顶部：只留一个 logo（72x<=240）+ 语言切换 ---- */
 header{
   position:sticky;top:0;z-index:9;
   padding:12px 16px;color:#fff;
@@ -33,8 +35,11 @@ header{
   backdrop-filter:saturate(120%) blur(4px)
 }
 .head{display:flex;align-items:center;gap:10px}
-.logo{height:40px;width:auto;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,.25);display:block}
-h1{margin:0;font-size:20px;letter-spacing:.5px;display:flex;gap:10px;align-items:baseline}
+header .logo{
+  height:72px; width:auto; max-width:240px; display:block;
+  border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,.25);
+}
+h1{margin:0;font-size:20px;letter-spacing:.5px;display:none} /* 隐藏标题节点，但保留 DOM 供脚本赋值 */
 h1 small{opacity:.9;color:var(--mut)}
 .lang{display:flex;gap:8px;margin-left:auto;flex-wrap:wrap}
 .lang button{
@@ -68,7 +73,9 @@ summary{
   background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.06));border-left:5px solid var(--accent)
 }
 summary::marker,summary::-webkit-details-marker{display:none}
-.cat-sub{color:var(--mut);font-weight:700;font-size:12px}
+/* 分类标题金色、右侧说明超浅红 */
+summary > span:first-child { color:#f2c84b; font-weight:900; } /* 金色主标题 */
+.cat-sub { color:#ffb3b3; font-weight:700; font-size:12px; }  /* 很浅很浅的红 */
 
 .cards{padding:10px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 @media (max-width:720px){.cards{grid-template-columns:1fr}}
@@ -89,7 +96,6 @@ summary::marker,summary::-webkit-details-marker{display:none}
 }
 .btn.small{padding:10px 14px;font-size:18px;border-width:2px}
 .btn.add{background:var(--brand)}
-/* 保留 WebView 反色修复，但改为红金主题 */
 .tools .btn{min-width:140px;text-align:center}
 body{color-scheme: light;}
 
@@ -99,7 +105,7 @@ body{color-scheme: light;}
   flex:1;background:transparent;border-style:dashed;color:#fff
 }
 .sumrow .btn.done{
-  flex:3;background:linear-gradient(180deg,#ffe38a,#f2c84b);border-color:#e7c14b;color:var(--brand-ink)
+  flex:3;background:var(--ok);border-color:var(--line);color:var(--brand-ink)
 }
 .note{
   width:100%;min-height:68px;border:1.5px solid var(--line);border-radius:12px;padding:10px;margin-top:10px;
@@ -115,33 +121,19 @@ body{color-scheme: light;}
 .tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
 .tag{font-size:11px;border:1px solid var(--line);color:#ffeecf;padding:2px 6px;border-radius:999px}
 .hidden{display:none}
-
-/* ===== Fixed header logo slot (72 x 240) ===== */
-header .head{display:flex;align-items:center;justify-content:flex-start}
-header .logo{
-  height:72px;     /* 固定高度 72px */
-  width:auto;
-  max-width:240px; /* 最大宽度 240px */
-  display:block;
-}
-
 </style>
 </head>
 <body>
 <header>
   <div class="head">
     <!-- 只保留这一张 logo，固定高72、最大宽240 -->
-    <img src="logo.png" alt="LYX Logo" class="logo" 
-         style="height:72px;width:auto;max-width:240px;display:block;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,.25);" 
-         onerror="this.style.display='none'">
-
-    <!-- 标题文字节点保留但隐藏，避免脚本 set textContent 报错 -->
-    <h1 class="brand" style="margin:0;display:none;">
+    <img src="logo.png" alt="LYX Logo" class="logo" onerror="this.style.display='none'">
+    <!-- 标题节点保留但隐藏，供脚本 set textContent 使用（不再显示第二个 logo） -->
+    <h1>
       <span id="title-main"></span>
       <small id="title-sub"></small>
     </h1>
-
-    <div class="lang" style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap">
+    <div class="lang">
       <button id="btn-zh" class="active">中文</button>
       <button id="btn-en">English</button>
       <button id="btn-vi">Tiếng Việt</button>
@@ -235,7 +227,7 @@ header .logo{
 <script>
 /* ====== 全局报错可视化（避免白屏） ====== */
 window.onerror = function(msg, src, line, col){
-  alert("脚本错误：\n" + msg + "\n@" + (src||'inline') + ":" + line + ":" + col);
+  alert("脚本错误：\\n" + msg + "\\n@" + (src||'inline') + ":" + line + ":" + col);
 };
 
 /* ========== I18N 多语言 ========== */
@@ -348,7 +340,7 @@ const I18N = {
 function t(k){return I18N.ui[LANG][k]||k;}
 function tItemName(id,fallback){return I18N.items[id]?.[LANG]||fallback;}
 
-/* ====== Cloud Sync 配置（保持你的旧逻辑；填入你的值即可） ====== */
+/* ====== Cloud Sync 配置（填入你的值） ====== */
 const CLOUD = {
   ENDPOINT: 'https://script.google.com/macros/s/XXXXXXXXXXXXXXXXXXXX/exec', // TODO: 你的 Apps Script Web 应用 URL
   SECRET: 'Lyx115599$api',  // TODO: 若 Apps Script 里设置了 LYX_SECRET，要与之匹配
@@ -361,7 +353,7 @@ function getDeviceId(){
   if(!v){ v='dev_'+Math.random().toString(36).slice(2); localStorage.setItem(k,v); }
   return v;
 }
-// 云端发送（保留你的 sendToCloud 逻辑）
+// 云端发送
 async function sendToCloud(payload){
   try{
     const res = await fetch(CLOUD.ENDPOINT, {
@@ -576,7 +568,7 @@ function finishAndSend(){
   saveStats(st);
 
   // —— 先提示本机已保存，然后尝试上云（不阻塞收银）
-  alert(`已保存到本机统计。\n订单笔数：${st.orders}，销售额：RM ${st.sales.toFixed(2)}。\n将尝试上传到云端…`);
+  alert(`已保存到本机统计。\\n订单笔数：${st.orders}，销售额：RM ${st.sales.toFixed(2)}。\\n将尝试上传到云端…`);
   const cloudPayload = {
     secret: CLOUD.SECRET || '',
     spreadsheetId: CLOUD.SPREADSHEET_ID || '',
@@ -591,7 +583,7 @@ function finishAndSend(){
   });
 
   // 组合消息 → 打开 WhatsApp（外链 & 兜底 Scheme）
-  const NL = "\n";
+  const NL = "\\n";
   const msg = [
     `${t('title_main')} 订单`,
     `${t('table')}: ${table}`,
@@ -644,9 +636,9 @@ function viewToday(){
   };
   const lines=(st.list||[]).map((r,i)=>{
     const rebuilt = toLines(r);
-    return `${i+1}. [${r.time}] ${r.table}/${r.type}\n   ${rebuilt.join("\n   ")}\n   ${I18N.ui.en.sum_total}: RM ${(+r.total).toFixed(2)}${r.note?("\n   "+t('note_label')+": "+r.note):""}`;
-  }).join("\n\n");
-  alert((lines||t('today_none')) + `\n\n${t('k_orders')}: ${st.orders} | ${t('k_items')}: ${st.items} | ${t('k_sales')}: RM ${st.sales.toFixed(2)}`);
+    return `${i+1}. [${r.time}] ${r.table}/${r.type}\\n   ${rebuilt.join("\\n   ")}\\n   ${I18N.ui.en.sum_total}: RM ${(+r.total).toFixed(2)}${r.note?("\\n   "+t('note_label')+": "+r.note):""}`;
+  }).join("\\n\\n");
+  alert((lines||t('today_none')) + `\\n\\n${t('k_orders')}: ${st.orders} | ${t('k_items')}: ${st.items} | ${t('k_sales')}: RM ${st.sales.toFixed(2)}`);
 }
 function viewByCategory(){
   const st=loadStats(); const c=st.cats||{};
@@ -658,7 +650,7 @@ function viewByCategory(){
     `${mapName[d]}：${(c[d]?.count||0)}  / RM ${(c[d]?.amount||0).toFixed(2)}`,
     `${mapName[a]}：${(c[a]?.count||0)}  / RM ${(c[a]?.amount||0).toFixed(2)}`,
     `${mapName[gx]}：${(c[gx]?.count||0)} / RM ${(c[gx]?.amount||0).toFixed(2)}`
-  ].join("\n");
+  ].join("\\n");
   alert(msg);
 }
 function exportCSV(){
@@ -674,9 +666,9 @@ function exportCSV(){
     }
     rows.push([r.time,r.table,r.type,itemsStr.replace(/,/g," "),"RM "+(+r.total).toFixed(2),(r.note||"").replace(/,/g," ")].join(","));
   });
-  const blob=new Blob([rows.join("\n")],{type:"text/csv;charset=utf-8"});
+  const blob=new Blob([rows.join("\\n")],{type:"text/csv;charset=utf-8"});
   const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
-  a.download=`lyx_today_${todayKey().slice(-10)}.csv`; a.click();
+  a.download=\`lyx_today_\${todayKey().slice(-10)}.csv\`; a.click();
 }
 const DELETE_PWD="Lyx115599$";
 function deleteWithPwd(){
@@ -713,3 +705,4 @@ function bindButtonsSafely(){
 document.addEventListener("DOMContentLoaded", ()=>{ renderAll(); bindButtonsSafely(); });
 </script>
 </body>
+</html>
