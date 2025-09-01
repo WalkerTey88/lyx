@@ -184,9 +184,18 @@ summary{
 }
 
 
-/* ===== Adjusted Logo Only Header ===== */
-header h1{display:flex;align-items:center;justify-content:center}
-header h1 .logo{height:70px;width:auto;display:block}
+/* ===== Safe header logo slot (no JS errors) ===== */
+header .head{display:flex;align-items:center;justify-content:flex-start}
+header .logo{
+  height:72px;           /* 视觉高度（slot 高度 ~72px） */
+  width:auto;
+  max-width:240px;       /* 避免过宽挤压语言按钮 */
+  display:block;
+}
+/* 说明：若要最清晰，建议上传 3x 倍图：216px 高度的 PNG。常用尺寸：
+   - 216 x 720 px（横向）
+   - 或若用方形图：216 x 216 px
+   文件名：logo.png，与 index.html 同目录 */
 
 </style>
 </head>
@@ -195,8 +204,10 @@ header h1 .logo{height:70px;width:auto;display:block}
   <div class="head">
     <!-- 放 logo.png 即会显示；没有则隐藏 -->
     <img src="logo.png" alt="logo" class="logo" onerror="this.style.display='none'">
-    <h1>
+    <h1 class="head">
   <img src="logo.png" alt="LYX Logo" class="logo">
+  <span id="title-main" style="display:none"></span>
+  <small id="title-sub" style="display:none"></small>
 </h1>
     <div class="lang">
       <button id="btn-zh" class="active">中文</button>
