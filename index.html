@@ -35,7 +35,10 @@ header{
 }
 .head{display:flex;align-items:center;gap:10px}
 header .logo{
-  height:72px; width:auto; max-width:240px; display:block;
+  height:70px;           /* 你要的高度 */
+  width:auto;
+  max-width:190px;       /* 你要的最大宽 */
+  display:block;
   border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,.25);
 }
 h1{margin:0;font-size:20px;letter-spacing:.5px;display:none}
@@ -62,8 +65,7 @@ h1 small{opacity:.9;color:var(--mut)}
 .input{
   padding:10px;border:1.5px solid var(--line);border-radius:12px;min-width:140px;
   background:rgba(255,255,255,.08);
-  color:#fff;                         /* 白字 */
-  font-weight:900;                    /* 加粗 */
+  color:#fff; font-weight:900;
 }
 .input::placeholder{color:#ffffffcc;font-weight:900}
 .input:focus{outline:none;box-shadow:var(--ring);border-color:var(--accent)}
@@ -75,7 +77,7 @@ details{
   border:1.5px solid #e7c14b;
   border-radius:14px;
   margin:10px 0;
-  color:#5a3b00; /* 卡片里的字=深棕 */
+  color:#5a3b00;
 }
 summary{
   list-style:none; cursor:pointer;
@@ -98,7 +100,14 @@ summary > span:first-child{ color:#5a3b00; font-weight:900; }
 .item .left{flex:1}
 .title{font-weight:900}
 .sub{color:var(--mut);font-size:12px;line-height:1.25}
-.qty{min-width:56px;text-align:center;font-weight:900;color:#fff}
+.qty{min-width:40px;text-align:center;font-weight:900;color:#fff}
+
+/* 右侧操作区：横排 - 数量 +，并拉开间距 */
+.actions{
+  display:flex; align-items:center; gap:16px; /* 间距你可调大/小 */
+  margin-bottom:8px; justify-content:flex-end;
+}
+.actions .btn.small{min-width:44px;}
 
 /* ---- 按钮：全站统一贵气金色 ---- */
 .btn{
@@ -112,31 +121,24 @@ summary > span:first-child{ color:#5a3b00; font-weight:900; }
 .btn:hover{filter:saturate(106%) brightness(1.02)}
 .btn:active{transform:translateY(1px);box-shadow:inset 0 2px 0 rgba(0,0,0,.12)}
 .btn:disabled{
-  background:linear-gradient(180deg,#ffe38a,#f2c84b); /* 仍保持金色，不变灰 */
+  background:linear-gradient(180deg,#ffe38a,#f2c84b);
   color:var(--brand-ink);
   opacity:1; filter:none; cursor:not-allowed;
   border-color:#e7c14b;
 }
-
 .btn.small{padding:10px 14px;font-size:18px;border-width:2px}
-.btn.add{}
+.btn.add{ width:100%; }          /* 入单按钮放一行，容易点 */
 
-/* 工具按钮保持金色主调 */
 .tools .btn{min-width:140px;text-align:center}
 
 body{color-scheme: light;}
 .sticky{position:sticky;top:86px}
 .sumrow{display:flex;gap:10px;margin-top:10px}
 
-/* 打印 & 完成 都是金色（避免任何“灰”） */
-.sumrow .btn.print{
-  flex:1;
-}
-.sumrow .btn.done{
-  flex:3;
-}
+/* 打印 & 完成 */
+.sumrow .btn.print{ flex:1; }
+.sumrow .btn.done{ flex:3; }
 
-/* 备注：加粗白字 */
 .note{
   width:100%;min-height:68px;border:1.5px solid var(--line);border-radius:12px;padding:10px;margin-top:10px;
   background:rgba(255,255,255,.06);color:#fff;font-weight:900;
@@ -256,7 +258,7 @@ body{color-scheme: light;}
 <script>
 /* ====== 全局报错可视化（避免白屏） ====== */
 window.onerror = function(msg, src, line, col){
-  alert("脚本错误：\\n" + msg + "\\n@" + (src||'inline') + ":" + line + ":" + col);
+  alert("脚本错误：\n" + msg + "\n@" + (src||'inline') + ":" + line + ":" + col);
 };
 
 /* ========== I18N 多语言 ========== */
@@ -264,7 +266,7 @@ let LANG = 'zh';
 const I18N = {
   ui: {
     zh:{title_main:"龍運轩ᝰ美食中心",title_sub:"LYX Food Center",order:"点餐 / Order",cart:"订单 / Cart",
-      table:"桌号",takeaway:"外带",dinein:"堂食",add:"加入",
+      table:"桌号",takeaway:"外带",dinein:"堂食",add:"入单",
       cat_wonton:"龍兴记ᝰ云吞面",cat_wonton_tip:"点击展开/收起",
       cat_drinks:"饮料",cat_drinks_tip:"全部饮料冰+RM0.20（罐装水除外；我们已把热/冰分开定价）",
       cat_auntie:"婶婶档",cat_auntie_tip:"点击展开/收起",
@@ -279,7 +281,7 @@ const I18N = {
       time:"时间",type:"类型",
       csv_time:"时间",csv_table:"桌号",csv_type:"类型",csv_items:"项目",csv_total:"合计",csv_note:"备注"},
     en:{title_main:"LYX Food Center (龍運轩ᝰ)",title_sub:"LYX Food Center",order:"Order",cart:"Cart",
-      table:"Table",takeaway:"Takeaway",dinein:"Dine-in",add:"Add",
+      table:"Table",takeaway:"Takeaway",dinein:"Dine-in",add:"Add to Cart",
       cat_wonton:"Wonton Noodles",cat_wonton_tip:"Tap to expand/collapse",
       cat_drinks:"Drinks",cat_drinks_tip:"Iced + RM0.20 (except canned water; hot/iced priced separately)",
       cat_auntie:"Auntie's Stall",cat_auntie_tip:"Tap to expand/collapse",
@@ -294,7 +296,7 @@ const I18N = {
       time:"Time",type:"Type",
       csv_time:"Time",csv_table:"Table",csv_type:"Type",csv_items:"Items",csv_total:"Total",csv_note:"Note"},
     vi:{title_main:"Trung tâm Ẩm thực LYX (龍運轩ᝰ)",title_sub:"LYX Food Center",order:"Gọi món",cart:"Giỏ hàng",
-      table:"Bàn",takeaway:"Mang đi",dinein:"Dùng tại chỗ",add:"Thêm",
+      table:"Bàn",takeaway:"Mang đi",dinein:"Dùng tại chỗ",add:"Thêm vào giỏ",
       cat_wonton:"Mì hoành thánh",cat_wonton_tip:"Nhấn để mở/đóng",
       cat_drinks:"Đồ uống",cat_drinks_tip:"Đá + RM0.20 (trừ nước lon; giá nóng/lạnh tách riêng)",
       cat_auntie:"Quầy của Cô",cat_auntie_tip:"Nhấn để mở/đóng",
@@ -364,7 +366,7 @@ const I18N = {
 function t(k){return I18N.ui[LANG][k]||k;}
 function tItemName(id,fallback){return I18N.items[id]?.[LANG]||fallback;}
 
-/* ====== Cloud Sync（保留你的原样配置占位） ====== */
+/* ====== Cloud Sync（用你的端点） ====== */
 const CLOUD = {
   ENDPOINT: 'https://script.google.com/macros/s/AKfycbxB6-qaReLnp0lQIWTdAcxpYlgS0Ld3xXmNCaHn22o0KHAkdsSWLvLDNZkZtg-EFYl-/exec',
   SECRET: 'Lyx115599$api',
@@ -384,15 +386,68 @@ async function sendToCloud(payload){
   }catch(e){ console.warn('cloud failed', e); return false; }
 }
 
-/* ========= 菜单数据（保持原样） ========= */
-const WONTON=[{id:"w_small",name:"云吞面（小）",price:6.50},{id:"w_mid",name:"云吞面（中）",price:7.50},{id:"w_big",name:"云吞面（大）",price:8.50},{id:"w_wantan_dry",name:"云吞 干捞（一份）",price:5.00},{id:"w_wantan_soup",name:"云吞 汤（一份）",price:5.00},{id:"w_add3",name:"加料：云吞 ×3",price:1.00},];
-const DRINKS=[{id:"d_coffee_hot",name:"咖啡（热）",price:2.30},{id:"d_coffee_ice",name:"咖啡（冰）",price:2.50},{id:"d_coffeeC_hot",name:"咖啡C（热）",price:2.50},{id:"d_coffeeC_ice",name:"咖啡C（冰）",price:2.70},{id:"d_coffeeO_hot",name:"咖啡O（热）",price:2.00},{id:"d_coffeeO_ice",name:"咖啡O（冰）",price:2.20},{id:"d_milktea_hot",name:"奶茶（热）",price:2.30},{id:"d_milktea_ice",name:"奶茶（冰）",price:2.50},{id:"d_milkteaC_hot",name:"奶茶C（热）",price:2.50},{id:"d_milkteaC_ice",name:"奶茶C（冰）",price:2.70},{id:"d_milkteaSC_hot",name:"奶茶咸C（热）",price:2.50},{id:"d_milkteaSC_ice",name:"奶茶咸C（冰）",price:2.70},{id:"d_milo_hot",name:"Milo（热）",price:2.60},{id:"d_milo_ice",name:"Milo（冰）",price:2.80},{id:"d_miloC_hot",name:"Milo C（热）",price:2.80},{id:"d_miloC_ice",name:"Milo C（冰）",price:3.00},{id:"d_miloO_hot",name:"Milo O（热）",price:2.60},{id:"d_miloO_ice",name:"Milo O（冰）",price:2.80},{id:"d_canned",name:"罐装水",price:3.00},];
-const AUNTIE=[{id:"a_bitter_rice_noodle",name:"苦瓜米粉",price:6.00},{id:"a_nasi_ayam",name:"Nasi Lemak（有鸡肉）",price:6.00},{id:"a_nasi_egg",name:"Nasi Lemak（只有鸡蛋）",price:3.00},{id:"a_pan_mee",name:"面粉糕",price:6.00},{id:"a_braised_rice",name:"红烧饭",price:6.00},{id:"a_congee_pork",name:"鱼粥（猪肉）",price:6.00},{id:"a_congee_chicken",name:"鱼粥（鸡肉）",price:6.00},{id:"a_mianxian",name:"面线",price:6.00},{id:"a_lu_rou_fan",name:"卤肉饭",price:6.00},{id:"a_kuey_teow_soup",name:"果条汤",price:6.00},{id:"a_add_century_egg",name:"加皮蛋",price:1.00},{id:"a_add_pickled_cucumber",name:"酸笋瓜",price:1.50},{id:"a_add_pickled_okra",name:"酸羊角豆",price:1.50},{id:"a_add_pickled_bitter",name:"酸苦瓜",price:1.50},{id:"a_add_pickled_tofu",name:"酸豆腐",price:1.50},{id:"a_add_wing",name:"炸鸡翅膀",price:3.00},{id:"a_add_fried_egg",name:"煎鸡蛋",price:1.00},];
-const GUANGXI=[{id:"gx_su",name:"素粉(kosong)",price:1.00},{id:"gx_veg",name:"蔬菜卷筒粉",price:2.00},{id:"gx_meatveg",name:"菜加肉卷筒粉",price:3.00},{id:"gx_meat",name:"肉卷筒粉",price:3.00},{id:"gx_full",name:"全家福卷筒粉",price:4.00},{id:"gx_spring",name:"春卷",price:1.00},{id:"gx_taro",name:"芋头米糕",price:1.00},];
+/* ========= 菜单数据 ========= */
+const WONTON=[
+  {id:"w_small",name:"云吞面（小）",price:6.50},
+  {id:"w_mid",name:"云吞面（中）",price:7.50},
+  {id:"w_big",name:"云吞面（大）",price:8.50},
+  {id:"w_wantan_dry",name:"云吞 干捞（一份）",price:5.00},
+  {id:"w_wantan_soup",name:"云吞 汤（一份）",price:5.00},
+  {id:"w_add3",name:"加料：云吞 ×3",price:1.00},
+];
+const DRINKS=[
+  {id:"d_coffee_hot",name:"咖啡（热）",price:2.30},
+  {id:"d_coffee_ice",name:"咖啡（冰）",price:2.50},
+  {id:"d_coffeeC_hot",name:"咖啡C（热）",price:2.50},
+  {id:"d_coffeeC_ice",name:"咖啡C（冰）",price:2.70},
+  {id:"d_coffeeO_hot",name:"咖啡O（热）",price:2.00},
+  {id:"d_coffeeO_ice",name:"咖啡O（冰）",price:2.20},
+  {id:"d_milktea_hot",name:"奶茶（热）",price:2.30},
+  {id:"d_milktea_ice",name:"奶茶（冰）",price:2.50},
+  {id:"d_milkteaC_hot",name:"奶茶C（热）",price:2.50},
+  {id:"d_milkteaC_ice",name:"奶茶C（冰）",price:2.70},
+  {id:"d_milkteaSC_hot",name:"奶茶咸C（热）",price:2.50},
+  {id:"d_milkteaSC_ice",name:"奶茶咸C（冰）",price:2.70},
+  {id:"d_milo_hot",name:"Milo（热）",price:2.60},
+  {id:"d_milo_ice",name:"Milo（冰）",price:2.80},
+  {id:"d_miloC_hot",name:"Milo C（热）",price:2.80},
+  {id:"d_miloC_ice",name:"Milo C（冰）",price:3.00},
+  {id:"d_miloO_hot",name:"Milo O（热）",price:2.60},
+  {id:"d_miloO_ice",name:"Milo O（冰）",price:2.80},
+  {id:"d_canned",name:"罐装水",price:3.00},
+];
+const AUNTIE=[
+  {id:"a_bitter_rice_noodle",name:"苦瓜米粉",price:6.00},
+  {id:"a_nasi_ayam",name:"Nasi Lemak（有鸡肉）",price:6.00},
+  {id:"a_nasi_egg",name:"Nasi Lemak（只有鸡蛋）",price:3.00},
+  {id:"a_pan_mee",name:"面粉糕",price:6.00},
+  {id:"a_braised_rice",name:"红烧饭",price:6.00},
+  {id:"a_congee_pork",name:"鱼粥（猪肉）",price:6.00},
+  {id:"a_congee_chicken",name:"鱼粥（鸡肉）",price:6.00},
+  {id:"a_mianxian",name:"面线",price:6.00},
+  {id:"a_lu_rou_fan",name:"卤肉饭",price:6.00},
+  {id:"a_kuey_teow_soup",name:"果条汤",price:6.00},
+  {id:"a_add_century_egg",name:"加皮蛋",price:1.00},
+  {id:"a_add_pickled_cucumber",name:"酸笋瓜",price:1.50},
+  {id:"a_add_pickled_okra",name:"酸羊角豆",price:1.50},
+  {id:"a_add_pickled_bitter",name:"酸苦瓜",price:1.50},
+  {id:"a_add_pickled_tofu",name:"酸豆腐",price:1.50},
+  {id:"a_add_wing",name:"炸鸡翅膀",price:3.00},
+  {id:"a_add_fried_egg",name:"煎鸡蛋",price:1.00},
+];
+const GUANGXI=[
+  {id:"gx_su",name:"素粉(kosong)",price:1.00},
+  {id:"gx_veg",name:"蔬菜卷筒粉",price:2.00},
+  {id:"gx_meatveg",name:"菜加肉卷筒粉",price:3.00},
+  {id:"gx_meat",name:"肉卷筒粉",price:3.00},
+  {id:"gx_full",name:"全家福卷筒粉",price:4.00},
+  {id:"gx_spring",name:"春卷",price:1.00},
+  {id:"gx_taro",name:"芋头米糕",price:1.00},
+];
 const ALL=[...WONTON,...DRINKS,...AUNTIE,...GUANGXI];
 
 /* ========= 渲染 ========= */
-const cart={};
+const cart={}; // {id: qty}
 function itemCard(it){
   const displayName=tItemName(it.id,it.name);
   return `
@@ -401,12 +456,13 @@ function itemCard(it){
       <div class="title">${displayName}</div>
       <div class="sub">RM ${it.price.toFixed(2)}</div>
     </div>
-    <div>
-      <button class="btn small" onclick="dec('${it.id}')">-</button>
-      <div id="qty-${it.id}" class="qty">${cart[it.id]||0}</div>
-      <button class="btn small" onclick="inc('${it.id}')">+</button>
-      <div style="height:6px"></div>
-      <button class="btn add" onclick="inc('${it.id}')">${t('add')}</button>
+    <div style="min-width:200px">
+      <div class="actions">
+        <button class="btn small" onclick="dec('${it.id}')">-</button>
+        <div id="qty-${it.id}" class="qty">${cart[it.id]||0}</div>
+        <button class="btn small" onclick="inc('${it.id}')">+</button>
+      </div>
+      <button class="btn add" onclick="addToCart('${it.id}')">${t('add')}</button>
     </div>
   </div>`;
 }
@@ -455,6 +511,11 @@ function renderAll(){
 /* ========= 购物车 & 价格 ========= */
 function inc(id){ cart[id]=(cart[id]||0)+1; renderCart(); syncQty(id); }
 function dec(id){ if(!cart[id]) return; cart[id]--; if(cart[id]<=0) delete cart[id]; renderCart(); syncQty(id); }
+/* 入单：确保至少 1 件并刷新 */
+function addToCart(id){
+  if(!cart[id] || cart[id] <= 0){ cart[id] = 1; }
+  renderCart(); syncQty(id);
+}
 function syncQty(id){ const q=document.getElementById("qty-"+id); if(q) q.textContent=cart[id]||0; }
 function priceOf(id){ const it=ALL.find(x=>x.id===id); return it?it.price:0; }
 function nameOf(id){ const it=ALL.find(x=>x.id===id); if(!it) return id; return tItemName(id, it.name); }
@@ -519,7 +580,7 @@ function finishAndSend(){
   st.list.push({time:new Date().toLocaleString(), table, type, lines, items_struct:itemsArr, total:subtotal, note});
   saveStats(st);
 
-  alert(`已保存到本机统计。\\n订单笔数：${st.orders}，销售额：RM ${st.sales.toFixed(2)}。\\n将尝试上传到云端…`);
+  alert(`已保存到本机统计。\n订单笔数：${st.orders}，销售额：RM ${st.sales.toFixed(2)}。\n将尝试上传到云端…`);
   const cloudPayload = {
     secret: CLOUD.SECRET || '',
     spreadsheetId: CLOUD.SPREADSHEET_ID || '',
@@ -533,7 +594,7 @@ function finishAndSend(){
     if(!ok){ alert('云端上传失败（网络/权限）。本机已保存，稍后再试。'); }
   });
 
-  const NL = "\\n";
+  const NL = "\n";
   const msg = [
     `${t('title_main')} 订单`,
     `${t('table')}: ${table}`,
@@ -585,9 +646,9 @@ function viewToday(){
   };
   const lines=(st.list||[]).map((r,i)=>{
     const rebuilt = toLines(r);
-    return `${i+1}. [${r.time}] ${r.table}/${r.type}\\n   ${rebuilt.join("\\n   ")}\\n   ${I18N.ui.en.sum_total}: RM ${(+r.total).toFixed(2)}${r.note?("\\n   "+t('note_label')+": "+r.note):""}`;
-  }).join("\\n\\n");
-  alert((lines||t('today_none')) + `\\n\\n${t('k_orders')}: ${st.orders} | ${t('k_items')}: ${st.items} | ${t('k_sales')}: RM ${st.sales.toFixed(2)}`);
+    return `${i+1}. [${r.time}] ${r.table}/${r.type}\n   ${rebuilt.join("\n   ")}\n   ${I18N.ui.en.sum_total}: RM ${(+r.total).toFixed(2)}${r.note?("\n   "+t('note_label')+": "+r.note):""}`;
+  }).join("\n\n");
+  alert((lines||t('today_none')) + `\n\n${t('k_orders')}: ${st.orders} | ${t('k_items')}: ${st.items} | ${t('k_sales')}: RM ${st.sales.toFixed(2)}`);
 }
 function viewByCategory(){
   const st=loadStats(); const c=st.cats||{};
@@ -599,7 +660,7 @@ function viewByCategory(){
     `${mapName[d]}：${(c[d]?.count||0)}  / RM ${(c[d]?.amount||0).toFixed(2)}`,
     `${mapName[a]}：${(c[a]?.count||0)}  / RM ${(c[a]?.amount||0).toFixed(2)}`,
     `${mapName[gx]}：${(c[gx]?.count||0)} / RM ${(c[gx]?.amount||0).toFixed(2)}`
-  ].join("\\n");
+  ].join("\n");
   alert(msg);
 }
 function exportCSV(){
@@ -615,9 +676,9 @@ function exportCSV(){
     }
     rows.push([r.time,r.table,r.type,itemsStr.replace(/,/g," "),"RM "+(+r.total).toFixed(2),(r.note||"").replace(/,/g," ")].join(","));
   });
-  const blob=new Blob([rows.join("\\n")],{type:"text/csv;charset=utf-8"});
+  const blob=new Blob([rows.join("\n")],{type:"text/csv;charset=utf-8"});
   const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
-  a.download=\`lyx_today_\${todayKey().slice(-10)}.csv\`; a.click();
+  a.download=`lyx_today_${todayKey().slice(-10)}.csv`; a.click();
 }
 const DELETE_PWD="Lyx115599$";
 function deleteWithPwd(){
@@ -651,14 +712,12 @@ function bindButtonsSafely(){
   document.getElementById('btn-en').onclick=()=>setLang('en');
   document.getElementById('btn-vi').onclick=()=>setLang('vi');
 }
-<script>
-// 把用到的函数挂到 window，保证 WebViewer 里 onclick 可见
+
+/* 把 onclick 用到的方法挂到 window，兼容 WebViewer */
 Object.assign(window,{
-  inc,dec,printReceipt,finishAndSend,
+  inc,dec,addToCart,printReceipt,finishAndSend,
   viewToday,viewByCategory,exportCSV,deleteWithPwd,setLang
 });
-Object.assign(window,{ inc,dec,printReceipt,finishAndSend,
-  viewToday,viewByCategory,exportCSV,deleteWithPwd,setLang });
 
 document.addEventListener("DOMContentLoaded", ()=>{ renderAll(); bindButtonsSafely(); });
 </script>
