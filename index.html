@@ -14,9 +14,9 @@
   --ink:#ffffff;            /* 主文字白 */
   --mut:#ffeecf;            /* 次要文字（金米白） */
   --line:#f1d27a;           /* 金色线条 */
-  --brand:#b70e18;          /* 按钮红 */
-  --brand-ink:#ffffff;      /* 按钮字白 */
-  --ok:#b70e18;             /* 主行动按钮仍用红色 */
+--brand:#f2c84b;     /* 主按钮=金色 */
+--brand-ink:#5a3b00; /* 金色按钮上的字=深棕 */
+--ok:#f2c84b;        /* 主行动按钮=金色 */
   --accent:#ffd86b;         /* 柔金 */
   --shadow:0 10px 28px rgba(0,0,0,.18);
   --ring:0 0 0 3px rgba(242,200,75,.25);
@@ -67,15 +67,26 @@ h1 small{opacity:.9;color:var(--mut)}
 .input:focus{outline:none;box-shadow:var(--ring);border-color:var(--accent)}
 .switch{display:flex;gap:8px;align-items:center;border:1.5px solid var(--line);border-radius:12px;padding:8px 10px;background:rgba(255,255,255,.06)}
 
-details{border:1.5px solid var(--line);border-radius:14px;margin:10px 0;background:rgba(255,255,255,.04)}
+/* 分类整块金色卡片（未展开/展开都保持） */
+details{
+  background:linear-gradient(180deg,#ffe38a,#f2c84b);
+  border:1.5px solid #e7c14b;
+  border-radius:14px;
+  margin:10px 0;
+  color:#5a3b00; /* 卡片里的字=深棕 */
+}
 summary{
-  list-style:none;cursor:pointer;padding:12px 14px;border-radius:14px;display:flex;justify-content:space-between;align-items:center;font-weight:900;
-  background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.06));border-left:5px solid var(--accent)
+  list-style:none; cursor:pointer;
+  padding:12px 14px; border-radius:14px;
+  display:flex; justify-content:space-between; align-items:center; font-weight:900;
+  background:transparent;            /* 让整块看上去是一体的金色 */
+  border-left:0;                     /* 不要左侧彩条 */
 }
 summary::marker,summary::-webkit-details-marker{display:none}
-/* 分类标题金色、右侧说明超浅红 */
-summary > span:first-child { color:#f2c84b; font-weight:900; } /* 金色主标题 */
-.cat-sub { color:#ffb3b3; font-weight:700; font-size:12px; }  /* 很浅很浅的红 */
+
+/* 左侧分类标题=深棕，右侧提示=深棕（和截图一致） */
+summary > span:first-child{ color:#5a3b00; font-weight:900; }
+.cat-sub{ color:#5a3b00; font-weight:700; font-size:12px; opacity:.95; }
 
 .cards{padding:10px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 @media (max-width:720px){.cards{grid-template-columns:1fr}}
@@ -103,9 +114,11 @@ body{color-scheme: light;}
 .sumrow{display:flex;gap:10px;margin-top:10px}
 .sumrow .btn.print{
   flex:1;background:transparent;border-style:dashed;color:#fff
-}
-.sumrow .btn.done{
-  flex:3;background:var(--ok);border-color:var(--line);color:var(--brand-ink)
+}.sumrow .btn.done{
+  flex:3;
+  background:linear-gradient(180deg,#ffe38a,#f2c84b);
+  border-color:#e7c14b;
+  color:#5a3b00;
 }
 .note{
   width:100%;min-height:68px;border:1.5px solid var(--line);border-radius:12px;padding:10px;margin-top:10px;
