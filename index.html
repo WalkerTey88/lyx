@@ -651,6 +651,15 @@ function bindButtonsSafely(){
   document.getElementById('btn-en').onclick=()=>setLang('en');
   document.getElementById('btn-vi').onclick=()=>setLang('vi');
 }
+<script>
+// 把用到的函数挂到 window，保证 WebViewer 里 onclick 可见
+Object.assign(window,{
+  inc,dec,printReceipt,finishAndSend,
+  viewToday,viewByCategory,exportCSV,deleteWithPwd,setLang
+});
+Object.assign(window,{ inc,dec,printReceipt,finishAndSend,
+  viewToday,viewByCategory,exportCSV,deleteWithPwd,setLang });
+
 document.addEventListener("DOMContentLoaded", ()=>{ renderAll(); bindButtonsSafely(); });
 </script>
 </body>
