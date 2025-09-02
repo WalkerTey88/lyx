@@ -1,706 +1,220 @@
 <!DOCTYPE html>
-<html lang="zh" translate="no">
+<html lang="zh">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>龍運轩ᝰ美食中心 · LYX Food Center</title>
-<meta name="color-scheme" content="light">
-<style>
-/* ============== 红包风主题（红底 / 金色按钮 / 金线） ============== */
-:root{
-  --bg:#9b0b14;             /* 整体大红（背景） */
-  --bg-deep:#7e0810;        /* 深红（渐变用） */
-  --card:#b70e18;           /* 卡片红（比背景略亮） */
-  --ink:#ffffff;            /* 主文字白 */
-  --mut:#ffeecf;            /* 次要文字（金米白） */
-  --line:#f1d27a;           /* 金色线条 */
-  --brand:#f2c84b;          /* 主按钮=金色 */
-  --brand-ink:#5a3b00;      /* 金色按钮上的字=深棕 */
-  --accent:#ffd86b;         /* 柔金 */
-  --shadow:0 10px 28px rgba(0,0,0,.18);
-  --ring:0 0 0 3px rgba(242,200,75,.25);
-}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;background:linear-gradient(180deg,var(--bg),var(--bg-deep));color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
-a{text-decoration:none;color:inherit}
-.wrap{max-width:1200px;margin:20px auto;padding:0 12px 24px}
-
-/* ---- 顶部：logo + 语言 ---- */
-header{
-  position:sticky;top:0;z-index:9;
-  padding:12px 16px;color:#fff;
-  border-bottom:2px solid var(--line);
-  background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(0,0,0,0));
-  backdrop-filter:saturate(120%) blur(4px)
-}
-.head{display:flex;align-items:center;gap:10px}
-header .logo{
-  height:70px;           /* 按你要求：高70 */
-  width:auto;
-  max-width:190px;       /* 最大宽190 */
-  display:block;
-  border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,.25);
-}
-h1{margin:0;font-size:20px;letter-spacing:.5px;display:none}
-h1 small{opacity:.9;color:var(--mut)}
-.lang{display:flex;gap:8px;margin-left:auto;flex-wrap:wrap}
-.lang button{
-  padding:6px 12px;border-radius:999px;border:1.5px solid var(--line);
-  background:transparent;color:#fff;cursor:pointer;font-weight:900
-}
-.lang button.active{background:var(--brand);color:var(--brand-ink)}
-
-.grid{display:grid;grid-template-columns:2fr 1fr;gap:16px}
-@media (max-width:980px){.grid{grid-template-columns:1fr}}
-.panel{
-  background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03));
-  border:1.5px solid var(--line);border-radius:16px;box-shadow:var(--shadow)
-}
-.panel h3{margin:0;padding:14px 16px;border-bottom:1.5px dashed var(--line);font-size:16px;display:flex;align-items:center;gap:8px}
-.section{padding:12px 12px 18px}
-
-/* ---- 控件 ---- */
-.controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:0 6px 10px}
-.label{font-weight:900;color:var(--mut)}
-.input{
-  padding:10px;border:1.5px solid var(--line);border-radius:12px;min-width:140px;
-  background:rgba(255,255,255,.08);
-  color:#fff; font-weight:900;
-}
-.input::placeholder{color:#ffffffcc;font-weight:900}
-.input:focus{outline:none;box-shadow:var(--ring);border-color:var(--accent)}
-.switch{display:flex;gap:8px;align-items:center;border:1.5px solid var(--line);border-radius:12px;padding:8px 10px;background:rgba(255,255,255,.06)}
-
-/* ---- 分类：统一金色标题卡片（深棕字） ---- */
-details{
-  background:linear-gradient(180deg,#ffe38a,#f2c84b);
-  border:1.5px solid #e7c14b;
-  border-radius:14px;
-  margin:10px 0;
-  color:#5a3b00;
-}
-summary{
-  list-style:none; cursor:pointer;
-  padding:12px 14px; border-radius:14px;
-  display:flex; justify-content:space-between; align-items:center; font-weight:900;
-  background:transparent;
-}
-summary::marker,summary::-webkit-details-marker{display:none}
-summary > span:first-child{ color:#5a3b00; font-weight:900; }
-.cat-sub{ color:#5a3b00; font-weight:700; font-size:12px; opacity:.95; }
-
-.cards{padding:10px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-@media (max-width:720px){.cards{grid-template-columns:1fr}}
-
-.item{
-  border:1.5px solid var(--line);border-radius:14px;padding:12px;background:rgba(255,255,255,.06);display:flex;gap:12px;align-items:center;
-  transition:transform .08s ease, box-shadow .12s ease
-}
-.item:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,0,0,.22)}
-.item .left{flex:1}
-.title{font-weight:900}
-.sub{color:var(--mut);font-size:12px;line-height:1.25}
-.qty{min-width:40px;text-align:center;font-weight:900;color:#fff}
-
-/* 右侧操作区：横排 - 数量 +，并拉开间距 */
-.actions{
-  display:flex; align-items:center; gap:16px;
-  margin-bottom:8px; justify-content:flex-end;
-}
-.actions .btn.small{min-width:44px;}
-
-/* ---- 按钮：全站统一贵气金色 ---- */
-.btn{
-  padding:10px 14px;border-radius:12px;cursor:pointer;font-weight:900;letter-spacing:.2px;
-  border:1.5px solid #e7c14b;
-  background:linear-gradient(180deg,#ffe38a,#f2c84b);
-  color:var(--brand-ink);
-  box-shadow:inset 0 -2px 0 rgba(0,0,0,.12);
-  transition:transform .05s ease, filter .12s ease, box-shadow .12s ease;
-}
-.btn:hover{filter:saturate(106%) brightness(1.02)}
-.btn:active{transform:translateY(1px);box-shadow:inset 0 2px 0 rgba(0,0,0,.12)}
-.btn:disabled{
-  background:linear-gradient(180deg,#ffe38a,#f2c84b);
-  color:var(--brand-ink);
-  opacity:1; filter:none; cursor:not-allowed;
-  border-color:#e7c14b;
-}
-.btn.small{padding:10px 14px;font-size:18px;border-width:2px}
-.btn.add{ width:100%; }          /* 入单按钮放一行，容易点 */
-
-.tools .btn{min-width:140px;text-align:center}
-
-body{color-scheme: light;}
-.sticky{position:sticky;top:86px}
-.sumrow{display:flex;gap:10px;margin-top:10px}
-.sumrow .btn.print{ flex:1; }
-.sumrow .btn.done{ flex:3; }
-
-.note{
-  width:100%;min-height:68px;border:1.5px solid var(--line);border-radius:12px;padding:10px;margin-top:10px;
-  background:rgba(255,255,255,.06);color:#fff;font-weight:900;
-}
-.note::placeholder{color:#ffffffcc;font-weight:900}
-
-.sum{border-top:1.5px dashed var(--line);padding-top:10px;margin-top:10px}
-
-.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
-.kpi{border:1.5px solid var(--line);border-radius:12px;padding:10px;background:rgba(255,255,255,.06);text-align:center}
-.kpi b{display:block;font-size:18px;color:#fff}
-
-.tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-.tag{font-size:11px;border:1px solid var(--line);color:#ffeecf;padding:2px 6px;border-radius:999px}
-.hidden{display:none}
-</style>
+  <meta charset="UTF-8">
+  <title>点单系统</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f8f8f8; }
+    header { background: #b30f17; color: white; text-align: center; padding: 10px; font-size: 20px; }
+    .container { padding: 15px; }
+    button { padding: 8px 12px; margin: 4px; border: none; background: #b30f17; color: white; border-radius: 4px; cursor: pointer; }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+    input, textarea { width: 100%; padding: 8px; margin: 5px 0; border: 1px solid #ccc; border-radius: 4px; }
+    #cart { background: white; padding: 10px; border-radius: 6px; }
+    #print-area { display: none; }
+  </style>
 </head>
 <body>
-<header>
-  <div class="head">
-    <img src="logo.png" alt="LYX Logo" class="logo" onerror="this.style.display='none'">
-    <h1>
-      <span id="title-main"></span>
-      <small id="title-sub"></small>
-    </h1>
-    <div class="lang">
-      <button id="btn-zh" class="active">中文</button>
-      <button id="btn-en">English</button>
-      <button id="btn-vi">Tiếng Việt</button>
+  <header>点单系统</header>
+  <div class="container">
+    <label>桌号：</label>
+    <input id="tableNo" type="text" placeholder="请输入桌号">
+    <label><input type="checkbox" id="takeaway"> 打包</label>
+    <textarea id="note" placeholder="备注"></textarea>
+
+    <div id="menu">
+      <!-- 菜单内容示例 -->
+      <button onclick="addToCart('wonton',1)">云吞面 RM 8.50</button>
+      <button onclick="addToCart('drink',1)">饮料 RM 3.00</button>
     </div>
+
+    <h3>购物车</h3>
+    <div id="cart"></div>
+
+    <button id="btn-done" onclick="finishAndSend()">完成并统计</button>
+    <button onclick="printReceipt()">打印收据</button>
   </div>
-</header>
 
-<div class="wrap grid">
-  <!-- 左：菜单 -->
-  <section class="panel">
-    <h3 id="panel-order">点餐 / Order</h3>
-    <div class="section">
-      <div class="controls">
-        <label class="label" id="label-table">桌号</label>
-        <input id="tableNo" class="input" placeholder="A1">
-        <label class="switch">
-          <input type="checkbox" id="takeaway">
-          <span id="takeaway-label">外带</span>
-        </label>
-      </div>
+  <div id="print-area"></div>
 
-      <!-- 龍兴记ᝰ云吞面（默认收起） -->
-      <details>
-        <summary>
-          <span id="sum-wonton">龍兴记ᝰ云吞面</span>
-          <span class="cat-sub" id="tip-wonton">点击展开/收起</span>
-        </summary>
-        <div class="cards" id="cat-wonton"></div>
-      </details>
+  <script>
+    // 示例菜单数据
+    const prices = { wonton: 8.5, drink: 3.0 };
+    const names = { wonton: "云吞面", drink: "饮料" };
+    let cart = {};
 
-      <!-- 饮料（默认收起） -->
-      <details>
-        <summary>
-          <span id="sum-drinks">饮料</span>
-          <span class="cat-sub" id="tip-drinks">全部饮料冰+RM0.20（罐装水除外；我们已把热/冰分开定价）</span>
-        </summary>
-        <div class="cards" id="cat-drinks"></div>
-      </details>
+    function priceOf(id){ return prices[id] || 0; }
+    function nameOf(id){ return names[id] || id; }
 
-      <!-- 婶婶档（默认收起） -->
-      <details>
-        <summary>
-          <span id="sum-auntie">婶婶档</span>
-          <span class="cat-sub" id="tip-auntie">点击展开/收起</span>
-        </summary>
-        <div class="cards" id="cat-auntie"></div>
-      </details>
+    function addToCart(id, qty){
+      cart[id] = (cart[id] || 0) + qty;
+      renderCart();
+    }
+    function renderCart(){
+      const box=document.getElementById('cart');
+      box.innerHTML='';
+      let subtotal=0;
+      Object.keys(cart).forEach(id=>{
+        const qty=cart[id];
+        const amt=priceOf(id)*qty; subtotal+=amt;
+        box.innerHTML += `<div>${nameOf(id)} × ${qty} = RM ${amt.toFixed(2)}</div>`;
+      });
+      box.innerHTML += `<hr><b>合计: RM ${subtotal.toFixed(2)}</b>`;
+    }
 
-      <!-- 广西卷筒粉（默认收起） -->
-      <details>
-        <summary>
-          <span id="sum-gx">广西卷筒粉</span>
-          <span class="cat-sub" id="tip-gx">点击展开/收起</span>
-        </summary>
-        <div class="cards" id="cat-guangxi"></div>
-      </details>
-    </div>
-  </section>
+    function loadStats(){
+      try{ return JSON.parse(localStorage.getItem("stats")||"{\"orders\":0,\"items\":0,\"sales\":0,\"list\":[]}"); }
+      catch(e){ return {orders:0,items:0,sales:0,list:[]}; }
+    }
+    function saveStats(st){
+      localStorage.setItem("stats", JSON.stringify(st));
+    }
 
-  <!-- 右：订单 -->
-  <aside class="panel sticky">
-    <h3 id="panel-cart">订单 / Cart</h3>
-    <div id="cart" class="section"></div>
-    <div class="section">
-      <label class="label" id="note-label">备注</label>
-      <textarea id="note" class="note" placeholder="例如：少甜 / 少冰 / 加辣"></textarea>
-      <div class="sumrow">
-        <button class="btn print" id="btn-print">打印小票</button>
-        <button class="btn done" id="btn-done">完成并统计</button>
-      </div>
+    function showKpis(){
+      console.log("统计更新:", loadStats());
+    }
 
-      <div class="kpis">
-        <div class="kpi"><span id="kpi-orders-title">订单笔数</span><b id="kpi-orders">0</b></div>
-        <div class="kpi"><span id="kpi-items-title">售出件数</span><b id="kpi-items">0</b></div>
-        <div class="kpi"><span id="kpi-sales-title">销售金额</span><b id="kpi-sales">RM 0.00</b></div>
-      </div>
+    function t(k){ 
+      const map={alert_pick:"请先选择商品",alert_empty:"购物车为空",done:"完成并统计",
+                 takeaway:"打包",dinein:"堂食",title_main:"收据",title_sub:"谢谢惠顾",
+                 time:"时间",table:"桌号",type:"类型",sum_total:"总计"};
+      return map[k]||k; 
+    }
 
-      <div class="tools">
-        <button class="btn" id="btn-view">查看明细</button>
-        <button class="btn" id="btn-cat">分类统计</button>
-        <button class="btn" id="btn-csv">导出今日 CSV</button>
-        <button class="btn" id="btn-del">删单（需密码）</button>
-      </div>
-    </div>
-  </aside>
-</div>
+    // 模拟云端配置
+    const CLOUD={ SECRET:"demo", SPREADSHEET_ID:"demo", ENDPOINT:"/api" };
+  </script>
 
-<!-- 打印区 -->
-<div id="print-area" class="hidden"></div>
-
-<script>
-/* ====== 全局报错可视化（避免白屏） ====== */
-window.onerror = function(msg, src, line, col){
-  alert("脚本错误：\n" + msg + "\n@" + (src||'inline') + ":" + line + ":" + col);
-};
-
-/* ========== I18N 多语言 ========== */
-let LANG = 'zh';
-const I18N = {
-  ui: {
-    zh:{title_main:"龍運轩ᝰ美食中心",title_sub:"LYX Food Center",order:"点餐 / Order",cart:"订单 / Cart",
-      table:"桌号",takeaway:"外带",dinein:"堂食",add:"入单",
-      cat_wonton:"龍兴记ᝰ云吞面",cat_wonton_tip:"点击展开/收起",
-      cat_drinks:"饮料",cat_drinks_tip:"全部饮料冰+RM0.20（罐装水除外；我们已把热/冰分开定价）",
-      cat_auntie:"婶婶档",cat_auntie_tip:"点击展开/收起",
-      cat_gx:"广西卷筒粉",cat_gx_tip:"点击展开/收起",
-      note_label:"备注",note_ph:"例如：少甜 / 少冰 / 加辣",
-      print:"打印小票",done:"完成并统计",
-      k_orders:"订单笔数",k_items:"售出件数",k_sales:"销售金额",
-      tool_today:"查看明细",tool_cat:"分类统计",tool_csv:"导出今日 CSV",tool_del:"删单（需密码）",
-      sum_total:"合计 Total",alert_pick:"请先选择项目",alert_empty:"没有项目",
-      today_none:"（今天暂无）",cat_report_title:"分类统计（累计到今天）",
-      cat_name_w:"云吞面",cat_name_d:"饮料",cat_name_a:"婶婶档",cat_name_gx:"广西卷筒粉",
-      time:"时间",type:"类型",
-      csv_time:"时间",csv_table:"桌号",csv_type:"类型",csv_items:"项目",csv_total:"合计",csv_note:"备注"},
-    en:{title_main:"LYX Food Center (龍運轩ᝰ)",title_sub:"LYX Food Center",order:"Order",cart:"Cart",
-      table:"Table",takeaway:"Takeaway",dinein:"Dine-in",add:"Add to Cart",
-      cat_wonton:"Wonton Noodles",cat_wonton_tip:"Tap to expand/collapse",
-      cat_drinks:"Drinks",cat_drinks_tip:"Iced + RM0.20 (except canned water; hot/iced priced separately)",
-      cat_auntie:"Auntie's Stall",cat_auntie_tip:"Tap to expand/collapse",
-      cat_gx:"Guangxi Rolls",cat_gx_tip:"Tap to expand/collapse",
-      note_label:"Note",note_ph:"e.g. less sweet / less ice / extra spicy",
-      print:"Print Receipt",done:"Finish & Save",
-      k_orders:"Orders",k_items:"Items",k_sales:"Sales",
-      tool_today:"View Today",tool_cat:"By Category",tool_csv:"Export Today CSV",tool_del:"Delete (password)",
-      sum_total:"Total",alert_pick:"Please add items first",alert_empty:"No items",
-      today_none:"(No orders today)",cat_report_title:"Category Summary (today)",
-      cat_name_w:"Wonton Noodles",cat_name_d:"Drinks",cat_name_a:"Auntie's Stall",cat_name_gx:"Guangxi Rolls",
-      time:"Time",type:"Type",
-      csv_time:"Time",csv_table:"Table",csv_type:"Type",csv_items:"Items",csv_total:"Total",csv_note:"Note"},
-    vi:{title_main:"Trung tâm Ẩm thực LYX (龍運轩ᝰ)",title_sub:"LYX Food Center",order:"Gọi món",cart:"Giỏ hàng",
-      table:"Bàn",takeaway:"Mang đi",dinein:"Dùng tại chỗ",add:"Thêm vào giỏ",
-      cat_wonton:"Mì hoành thánh",cat_wonton_tip:"Nhấn để mở/đóng",
-      cat_drinks:"Đồ uống",cat_drinks_tip:"Đá + RM0.20 (trừ nước lon; giá nóng/lạnh tách riêng)",
-      cat_auntie:"Quầy của Cô",cat_auntie_tip:"Nhấn để mở/đóng",
-      cat_gx:"Bánh cuốn Quảng Tây",cat_gx_tip:"Nhấn để mở/đóng",
-      note_label:"Ghi chú",note_ph:"vd: ít ngọt / ít đá / thêm cay",
-      print:"In hóa đơn",done:"Hoàn tất & Lưu",
-      k_orders:"Đơn",k_items:"Món",k_sales:"Doanh thu",
-      tool_today:"Xem hôm nay",tool_cat:"Theo danh mục",tool_csv:"Xuất CSV hôm nay",tool_del:"Xóa (mật khẩu)",
-      sum_total:"Tổng",alert_pick:"Hãy chọn món trước",alert_empty:"Chưa có món",
-      today_none:"(Chưa có đơn hôm nay)",cat_report_title:"Tổng hợp theo danh mục (hôm nay)",
-      cat_name_w:"Mì hoành thánh",cat_name_d:"Đồ uống",cat_name_a:"Quầy của Cô",cat_name_gx:"Bánh cuốn Quảng Tây",
-      time:"Thời gian",type:"Loại",
-      csv_time:"Thời gian",csv_table:"Bàn",csv_type:"Loại",csv_items:"Món",csv_total:"Tổng",csv_note:"Ghi chú"}
-  },
-  items:{
-    w_small:{en:"Wonton Noodles (S)",vi:"Mì hoành thánh (Nhỏ)"},
-    w_mid:{en:"Wonton Noodles (M)",vi:"Mì hoành thánh (Vừa)"},
-    w_big:{en:"Wonton Noodles (L)",vi:"Mì hoành thánh (Lớn)"},
-    w_wantan_dry:{en:"Wontons (Dry, per portion)",vi:"Hoành thánh khô (1 phần)"},
-    w_wantan_soup:{en:"Wontons (Soup, per portion)",vi:"Hoành thánh nước (1 phần)"},
-    w_add3:{en:"Add-on: 3 Wontons",vi:"Thêm: 3 hoành thánh"},
-    d_coffee_hot:{en:"Coffee (Hot)",vi:"Cà phê (Nóng)"},
-    d_coffee_ice:{en:"Coffee (Iced)",vi:"Cà phê (Đá)"},
-    d_coffeeC_hot:{en:"Coffee C (Hot)",vi:"Cà phê C (Nóng)"},
-    d_coffeeC_ice:{en:"Coffee C (Iced)",vi:"Cà phê C (Đá)"},
-    d_coffeeO_hot:{en:"Coffee O (Hot)",vi:"Cà phê O (Nóng)"},
-    d_coffeeO_ice:{en:"Coffee O (Iced)",vi:"Cà phê O (Đá)"},
-    d_milktea_hot:{en:"Milk Tea (Hot)",vi:"Trà sữa (Nóng)"},
-    d_milktea_ice:{en:"Milk Tea (Iced)",vi:"Trà sữa (Đá)"},
-    d_milkteaC_hot:{en:"Milk Tea C (Hot)",vi:"Trà sữa C (Nóng)"},
-    d_milkteaC_ice:{en:"Milk Tea C (Iced)",vi:"Trà sữa C (Đá)"},
-    d_milkteaSC_hot:{en:"Salty Milk Tea C (Hot)",vi:"Trà sữa mặn C (Nóng)"},
-    d_milkteaSC_ice:{en:"Salty Milk Tea C (Iced)",vi:"Trà sữa mặn C (Đá)"},
-    d_milo_hot:{en:"Milo (Hot)",vi:"Milo (Nóng)"},
-    d_milo_ice:{en:"Milo (Iced)",vi:"Milo (Đá)"},
-    d_miloC_hot:{en:"Milo C (Hot)",vi:"Milo C (Nóng)"},
-    d_miloC_ice:{en:"Milo C (Iced)",vi:"Milo C (Đá)"},
-    d_miloO_hot:{en:"Milo O (Hot)",vi:"Milo O (Nóng)"},
-    d_miloO_ice:{en:"Milo O (Iced)",vi:"Milo O (Đá)"},
-    d_canned:{en:"Canned Water",vi:"Nước lon"},
-    a_bitter_rice_noodle:{en:"Bitter Gourd Bee Hoon",vi:"Bún khổ qua"},
-    a_nasi_ayam:{en:"Nasi Lemak (Chicken)",vi:"Nasi Lemak (gà)"},
-    a_nasi_egg:{en:"Nasi Lemak (Egg only)",vi:"Nasi Lemak (trứng)"},
-    a_pan_mee:{en:"Pan Mee",vi:"Mì Pan Mee"},
-    a_braised_rice:{en:"Braised Rice",vi:"Cơm kho"},
-    a_congee_pork:{en:"Fish Congee (Pork)",vi:"Cháo cá (heo)"},
-    a_congee_chicken:{en:"Fish Congee (Chicken)",vi:"Cháo cá (gà)"},
-    a_mianxian:{en:"Mee Sua",vi:"Mì sợi Mee Sua"},
-    a_lu_rou_fan:{en:"Lu Rou Fan",vi:"Cơm thịt kho"},
-    a_kuey_teow_soup:{en:"Kuey Teow Soup",vi:"Hủ tiếu nước"},
-    a_add_century_egg:{en:"Add-on: Century Egg",vi:"Thêm: trứng bách thảo"},
-    a_add_pickled_cucumber:{en:"Pickled Cucumber (add-on)",vi:"Dưa leo chua (thêm)"},
-    a_add_pickled_okra:{en:"Pickled Okra (add-on)",vi:"Đậu bắp chua (thêm)"},
-    a_add_pickled_bitter:{en:"Pickled Bitter Gourd (add-on)",vi:"Khổ qua chua (thêm)"},
-    a_add_pickled_tofu:{en:"Pickled Tofu (add-on)",vi:"Đậu phụ chua (thêm)"},
-    a_add_wing:{en:"Fried Chicken Wing",vi:"Cánh gà chiên"},
-    a_add_fried_egg:{en:"Fried Egg",vi:"Trứng ốp la"},
-    gx_su:{en:"Plain Rice Roll (kosong)",vi:"Bánh cuốn trơn (kosong)"},
-    gx_veg:{en:"Veg Rice Roll",vi:"Bánh cuốn rau"},
-    gx_meatveg:{en:"Meat + Veg Rice Roll",vi:"Bánh cuốn thịt + rau"},
-    gx_meat:{en:"Meat Rice Roll",vi:"Bánh cuốn thịt"},
-    gx_full:{en:"Combo Rice Roll",vi:"Bánh cuốn thập cẩm"},
-    gx_spring:{en:"Spring Roll",vi:"Chả giò"},
-    gx_taro:{en:"Taro Cake",vi:"Bánh khoai môn"}
-  }
-};
-function t(k){return I18N.ui[LANG][k]||k;}
-function tItemName(id,fallback){return I18N.items[id]?.[LANG]||fallback;}
-
-/* ====== Cloud Sync（Google Apps Script Web 应用接口） ====== */
-const CLOUD = {
-  ENDPOINT: 'https://script.google.com/macros/s/AKfycby84C0cXqeQzruVq9U5MdSCwur8V42yMNTKPW0909cNx1NBUk0LUbPDQrht588HEuUOhA/exec',
-  SECRET: 'Lyx115599$api',
-  SPREADSHEET_ID: '1mEx1LPaFYsBisXs5mOp-TA_P_9ntfpvMSVzdyKUveKk'
-};
-async function sendToCloud(payload){
-  try{
-    const res = await fetch(CLOUD.ENDPOINT, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify(payload)
+  <!-- === FINAL OPTIMIZATION PATCH === -->
+  <script defer>
+  /* ---------- Helpers ---------- */
+  function __escapeHTML__(s){
+    return String(s).replace(/[&<>"'`=\/]/g, function (c) {
+      return ({
+        "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;","/":"&#x2F;","`":"&#x60;","=":"&#x3D;"
+      })[c];
     });
-    const j = await res.json().catch(()=>({ok:false, error:'bad_json'}));
-    return j && j.ok;
-  }catch(e){ console.warn('cloud failed', e); return false; }
-}
+  }
+  function __fmtRM__(n){ 
+    const x = (typeof n === 'number') ? n : +(n||0); 
+    return "RM " + x.toFixed(2); 
+  }
 
-/* ========= 菜单数据 ========= */
-const WONTON=[
-  {id:"w_small",name:"云吞面（小）",price:6.50},
-  {id:"w_mid",name:"云吞面（中）",price:7.50},
-  {id:"w_big",name:"云吞面（大）",price:8.50},
-  {id:"w_wantan_dry",name:"云吞 干捞（一份）",price:5.00},
-  {id:"w_wantan_soup",name:"云吞 汤（一份）",price:5.00},
-  {id:"w_add3",name:"加料：云吞 ×3",price:1.00},
-];
-const DRINKS=[
-  {id:"d_coffee_hot",name:"咖啡（热）",price:2.30},
-  {id:"d_coffee_ice",name:"咖啡（冰）",price:2.50},
-  {id:"d_coffeeC_hot",name:"咖啡C（热）",price:2.50},
-  {id:"d_coffeeC_ice",name:"咖啡C（冰）",price:2.70},
-  {id:"d_coffeeO_hot",name:"咖啡O（热）",price:2.00},
-  {id:"d_coffeeO_ice",name:"咖啡O（冰）",price:2.20},
-  {id:"d_milktea_hot",name:"奶茶（热）",price:2.30},
-  {id:"d_milktea_ice",name:"奶茶（冰）",price:2.50},
-  {id:"d_milkteaC_hot",name:"奶茶C（热）",price:2.50},
-  {id:"d_milkteaC_ice",name:"奶茶C（冰）",price:2.70},
-  {id:"d_milkteaSC_hot",name:"奶茶咸C（热）",price:2.50},
-  {id:"d_milkteaSC_ice",name:"奶茶咸C（冰）",price:2.70},
-  {id:"d_milo_hot",name:"Milo（热）",price:2.60},
-  {id:"d_milo_ice",name:"Milo（冰）",price:2.80},
-  {id:"d_miloC_hot",name:"Milo C（热）",price:2.80},
-  {id:"d_miloC_ice",name:"Milo C（冰）",price:3.00},
-  {id:"d_miloO_hot",name:"Milo O（热）",price:2.60},
-  {id:"d_miloO_ice",name:"Milo O（冰）",price:2.80},
-  {id:"d_canned",name:"罐装水",price:3.00},
-];
-const AUNTIE=[
-  {id:"a_bitter_rice_noodle",name:"苦瓜米粉",price:6.00},
-  {id:"a_nasi_ayam",name:"Nasi Lemak（有鸡肉）",price:6.00},
-  {id:"a_nasi_egg",name:"Nasi Lemak（只有鸡蛋）",price:3.00},
-  {id:"a_pan_mee",name:"面粉糕",price:6.00},
-  {id:"a_braised_rice",name:"红烧饭",price:6.00},
-  {id:"a_congee_pork",name:"鱼粥（猪肉）",price:6.00},
-  {id:"a_congee_chicken",name:"鱼粥（鸡肉）",price:6.00},
-  {id:"a_mianxian",name:"面线",price:6.00},
-  {id:"a_lu_rou_fan",name:"卤肉饭",price:6.00},
-  {id:"a_kuey_teow_soup",name:"果条汤",price:6.00},
-  {id:"a_add_century_egg",name:"加皮蛋",price:1.00},
-  {id:"a_add_pickled_cucumber",name:"酸笋瓜",price:1.50},
-  {id:"a_add_pickled_okra",name:"酸羊角豆",price:1.50},
-  {id:"a_add_pickled_bitter",name:"酸苦瓜",price:1.50},
-  {id:"a_add_pickled_tofu",name:"酸豆腐",price:1.50},
-  {id:"a_add_wing",name:"炸鸡翅膀",price:3.00},
-  {id:"a_add_fried_egg",name:"煎鸡蛋",price:1.00},
-];
-const GUANGXI=[
-  {id:"gx_su",name:"素粉(kosong)",price:1.00},
-  {id:"gx_veg",name:"蔬菜卷筒粉",price:2.00},
-  {id:"gx_meatveg",name:"菜加肉卷筒粉",price:3.00},
-  {id:"gx_meat",name:"肉卷筒粉",price:3.00},
-  {id:"gx_full",name:"全家福卷筒粉",price:4.00},
-  {id:"gx_spring",name:"春卷",price:1.00},
-  {id:"gx_taro",name:"芋头米糕",price:1.00},
-];
-const ALL=[...WONTON,...DRINKS,...AUNTIE,...GUANGXI];
-
-/* ========= 渲染 ========= */
-const cart={}; // {id: qty}
-function itemCard(it){
-  const displayName=tItemName(it.id,it.name);
-  return `
-  <div class="item">
-    <div class="left">
-      <div class="title">${displayName}</div>
-      <div class="sub">RM ${it.price.toFixed(2)}</div>
-    </div>
-    <div style="min-width:200px">
-      <div class="actions">
-        <button class="btn small" onclick="dec('${it.id}')">-</button>
-        <div id="qty-${it.id}" class="qty">${cart[it.id]||0}</div>
-        <button class="btn small" onclick="inc('${it.id}')">+</button>
-      </div>
-      <button class="btn add" onclick="addToCart('${it.id}')">${t('add')}</button>
-    </div>
-  </div>`;
-}
-function renderCategory(elId,list){
-  const el=document.getElementById(elId);
-  if(!el){ alert('缺少容器：'+elId); return; }
-  el.innerHTML=list.map(itemCard).join("");
-}
-function renderAll(){
-  document.getElementById('title-main').textContent=t('title_main');
-  document.getElementById('title-sub').textContent=t('title_sub');
-  document.getElementById('panel-order').textContent=t('order');
-  document.getElementById('panel-cart').textContent=t('cart');
-  document.getElementById('label-table').textContent=t('table');
-  document.getElementById('takeaway-label').textContent=t('takeaway');
-  document.getElementById('note-label').textContent=t('note_label');
-  document.getElementById('btn-print').textContent=t('print');
-  document.getElementById('btn-done').textContent=t('done');
-  document.getElementById('kpi-orders-title').textContent=t('k_orders');
-  document.getElementById('kpi-items-title').textContent=t('k_items');
-  document.getElementById('kpi-sales-title').textContent=t('k_sales');
-  document.getElementById('btn-view').textContent=t('tool_today');
-  document.getElementById('btn-cat').textContent=t('tool_cat');
-  document.getElementById('btn-csv').textContent=t('tool_csv');
-  document.getElementById('btn-del').textContent=t('tool_del');
-  document.getElementById('note').placeholder=t('note_ph');
-
-  document.getElementById('sum-wonton').textContent=t('cat_wonton');
-  document.getElementById('tip-wonton').textContent=t('cat_wonton_tip');
-  document.getElementById('sum-drinks').textContent=t('cat_drinks');
-  document.getElementById('tip-drinks').textContent=t('cat_drinks_tip');
-  document.getElementById('sum-auntie').textContent=t('cat_auntie');
-  document.getElementById('tip-auntie').textContent=t('cat_auntie_tip');
-  document.getElementById('sum-gx').textContent=t('cat_gx');
-  document.getElementById('tip-gx').textContent=t('cat_gx_tip');
-
-  renderCategory("cat-wonton", WONTON);
-  renderCategory("cat-drinks", DRINKS);
-  renderCategory("cat-auntie", AUNTIE);
-  renderCategory("cat-guangxi", GUANGXI);
-
-  renderCart();
-  showKpis();
-}
-
-/* ========= 购物车 & 价格 ========= */
-function inc(id){ cart[id]=(cart[id]||0)+1; renderCart(); syncQty(id); }
-function dec(id){ if(!cart[id]) return; cart[id]--; if(cart[id]<=0) delete cart[id]; renderCart(); syncQty(id); }
-/* 入单：确保至少 1 件并刷新 */
-function addToCart(id){
-  if(!cart[id] || cart[id] <= 0){ cart[id] = 1; }
-  renderCart(); syncQty(id);
-}
-function syncQty(id){ const q=document.getElementById("qty-"+id); if(q) q.textContent=cart[id]||0; }
-function priceOf(id){ const it=ALL.find(x=>x.id===id); return it?it.price:0; }
-function nameOf(id){ const it=ALL.find(x=>x.id===id); if(!it) return id; return tItemName(id, it.name); }
-function renderCart(){
-  const el=document.getElementById("cart");
-  let subtotal=0, html="";
-  Object.keys(cart).forEach(id=>{
-    const qty=cart[id]; const line=priceOf(id)*qty; subtotal+=line;
-    html+=`<div>${nameOf(id)} × ${qty} = RM ${line.toFixed(2)}</div>`;
-  });
-  el.innerHTML = html + `<div class="sum">${t('sum_total')}: RM ${subtotal.toFixed(2)}</div>`;
-}
-
-/* ========= 本地统计 ========= */
-function todayKey(){
-  const fmt = new Intl.DateTimeFormat('en-CA', {timeZone:'Asia/Kuala_Lumpur',year:'numeric',month:'2-digit',day:'2-digit'});
-  const parts = fmt.formatToParts(new Date()).reduce((a,p)=>{a[p.type]=p.value;return a;}, {});
-  return `lyx_stats_${parts.year}-${parts.month}-${parts.day}`;
-}
-function loadStats(){
-  const raw = localStorage.getItem(todayKey());
-  return raw ? JSON.parse(raw) : {orders:0, items:0, sales:0, list:[], cats:{}};
-}
-function saveStats(st){ localStorage.setItem(todayKey(), JSON.stringify(st)); showKpis(); }
-function showKpis(){
-  const s=loadStats();
-  document.getElementById('kpi-orders').textContent=s.orders;
-  document.getElementById('kpi-items').textContent=s.items;
-  document.getElementById('kpi-sales').textContent="RM "+(s.sales||0).toFixed(2);
-}
-
-/* ========= 完成并统计（仅：本机统计 + 云端同步，不再发 WhatsApp） ========= */
-async function finishAndSend(){
-  if(Object.keys(cart).length===0){ alert(t('alert_pick')); return; }
-
-  const table = document.getElementById('tableNo').value || "-";
-  const type  = document.getElementById('takeaway').checked ? t('takeaway') : t('dinein');
-  const note  = (document.getElementById('note').value||"").trim();
-
-  let subtotal=0, itemsCount=0, lines=[], itemsArr=[];
-  Object.keys(cart).forEach(id=>{
-    const qty=cart[id]; itemsCount+=qty;
-    const lineAmt = priceOf(id)*qty; subtotal+=lineAmt;
-    lines.push(`- ${nameOf(id)} × ${qty} = RM ${lineAmt.toFixed(2)}`);
-    itemsArr.push({id, qty, amount:+lineAmt.toFixed(2)});
+  /* ---------- Lazy load images ---------- */
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll("img").forEach(img => {
+      if(!img.hasAttribute("loading")) img.setAttribute("loading","lazy");
+    });
   });
 
-  const st=loadStats();
-  st.orders += 1; st.items += itemsCount; st.sales = +(st.sales + subtotal).toFixed(2);
-  const catMap={
-    [I18N.ui.zh.cat_name_w]:WONTON.map(x=>x.id),
-    [I18N.ui.zh.cat_name_d]:DRINKS.map(x=>x.id),
-    [I18N.ui.zh.cat_name_a]:AUNTIE.map(x=>x.id),
-    [I18N.ui.zh.cat_name_gx]:GUANGXI.map(x=>x.id),
-  };
-  st.cats = st.cats || {};
-  Object.entries(catMap).forEach(([cat,ids])=>{
-    let c=0,s=0; ids.forEach(id=>{ if(cart[id]){ c+=cart[id]; s+=cart[id]*priceOf(id);} });
-    if(!st.cats[cat]) st.cats[cat]={count:0,amount:0};
-    st.cats[cat].count += c; st.cats[cat].amount = +(st.cats[cat].amount + s).toFixed(2);
-  });
-  st.list.push({time:new Date().toLocaleString(), table, type, lines, items_struct:itemsArr, total:subtotal, note});
-  saveStats(st);
+  /* ---------- Language persistence ---------- */
+  (function(){
+    try{
+      const saved = localStorage.getItem("lyx_lang");
+      if(saved && typeof saved === "string"){ window.LANG = saved; }
+    }catch(e){}
+  })();
+  if (typeof setLang === 'function') {
+    const __orig_setLang__ = setLang;
+    window.setLang = function(next){
+      try{ localStorage.setItem("lyx_lang", next); }catch(e){}
+      __orig_setLang__(next);
+    };
+  }
 
-  alert(`已保存到本机统计。\n订单笔数：${st.orders}，销售额：RM ${st.sales.toFixed(2)}。\n将尝试上传到云端…`);
+  /* ---------- Prevent double-submit ---------- */
+  let __SENDING__ = false;
+  if (typeof finishAndSend === 'function'){
+    window.finishAndSend = async function(){
+      if(Object.keys(cart||{}).length===0){ alert(t('alert_pick')); return; }
+      if(__SENDING__) return;
+      __SENDING__ = true;
+      const btn = document.getElementById('btn-done');
+      const btnText = btn ? btn.textContent : '';
+      if(btn){
+        btn.disabled = true;
+        btn.textContent = (t('done') || '完成并统计') + '…';
+      }
+      try{
+        const table = document.getElementById('tableNo').value || "-";
+        const type  = document.getElementById('takeaway').checked ? t('takeaway') : t('dinein');
+        const note  = (document.getElementById('note').value||"").trim();
 
-  const cloudPayload = {
-    secret: CLOUD.SECRET,
-    spreadsheetId: CLOUD.SPREADSHEET_ID,
-    table, type, note, lang: LANG,
-    items: itemsArr.map(it => ({ id: it.id, name: nameOf(it.id), qty: it.qty, amount: it.amount })),
-    total: +subtotal.toFixed(2)
-  };
-  const ok = await sendToCloud(cloudPayload);
-  if(!ok){ alert('云端上传失败（网络/权限）。本机已保存，稍后再试。'); }
-  else   { alert('云端上传成功 ✅'); }
+        let subtotal=0, itemsCount=0, lines=[], itemsArr=[];
+        Object.keys(cart).forEach(id=>{
+          const qty=cart[id]; itemsCount+=qty;
+          const lineAmt = priceOf(id)*qty; subtotal+=lineAmt;
+          lines.push(`- ${nameOf(id)} × ${qty} = ${__fmtRM__(lineAmt)}`);
+          itemsArr.push({id, qty, amount:+lineAmt.toFixed(2)});
+        });
 
-  for(const k in cart) delete cart[k];
-  renderCart(); showKpis();
-}
+        const st=loadStats();
+        st.orders += 1; st.items += itemsCount; st.sales = +(st.sales + subtotal).toFixed(2);
+        st.list.push({time:new Date().toLocaleString(), table, type, lines, items_struct:itemsArr, total:subtotal, note});
+        saveStats(st);
 
-/* ========= 打印小票 ========= */
-function printReceipt(){
-  if(Object.keys(cart).length===0){ alert(t('alert_empty')); return; }
-  const area=document.getElementById('print-area'); area.classList.remove('hidden');
-  const table=document.getElementById('tableNo').value||'-';
-  const type=document.getElementById('takeaway').checked?t('takeaway'):t('dinein');
-  let subtotal=0, body='';
-  Object.keys(cart).forEach(id=>{
-    const qty=cart[id], line=priceOf(id)*qty; subtotal+=line;
-    body+=`<div>${nameOf(id)} × ${qty}<span style="float:right">RM ${line.toFixed(2)}</span></div>`;
-  });
-  area.innerHTML=`
-  <div style="max-width:340px;margin:0 auto;font-size:13px;line-height:1.35;color:#000;background:#fff;padding:8px;border:2px dashed ${getComputedStyle(document.documentElement).getPropertyValue('--line')}">
-    <div style="text-align:center;font-weight:900;color:#b30f17">${t('title_main')}<br><small style="color:#333">${t('title_sub')}</small></div>
-    <div>${t('time')}: ${new Date().toLocaleString()}</div>
-    <div>${t('table')}: ${table}</div>
-    <div>${t('type')}: ${type}</div>
-    <hr>${body}<hr>
-    <div style="font-weight:900">${t('sum_total')}: RM ${subtotal.toFixed(2)}</div>
-  </div>`;
-  window.print(); area.classList.add('hidden');
-}
+        alert(`已保存到本机统计。\n订单笔数：${st.orders}，销售额：${__fmtRM__(st.sales)}。\n将尝试上传到云端…`);
 
-/* ========= 查看 / 导出 / 删除 ========= */
-function viewToday(){
-  const st=loadStats();
-  const toLines = (r)=>{
-    if (Array.isArray(r.items_struct) && r.items_struct.length){
-      return r.items_struct.map(it=>`- ${nameOf(it.id)} × ${it.qty} = RM ${(+it.amount).toFixed(2)}`);
-    }
-    return (r.lines||[]);
-  };
-  const lines=(st.list||[]).map((r,i)=>{
-    const rebuilt = toLines(r);
-    return `${i+1}. [${r.time}] ${r.table}/${r.type}\n   ${rebuilt.join("\n   ")}\n   ${I18N.ui.en.sum_total}: RM ${(+r.total).toFixed(2)}${r.note?("\n   "+t('note_label')+": "+r.note):""}`;
-  }).join("\n");
-  alert((lines||t('today_none')) + `\n\n${t('k_orders')}: ${st.orders} | ${t('k_items')}: ${st.items} | ${t('k_sales')}: RM ${st.sales.toFixed(2)}`);
-}
-function viewByCategory(){
-  const st=loadStats(); const c=st.cats||{};
-  const w = I18N.ui.zh.cat_name_w, d = I18N.ui.zh.cat_name_d, a = I18N.ui.zh.cat_name_a, gx = I18N.ui.zh.cat_name_gx;
-  const mapName = {[w]: I18N.ui[LANG].cat_name_w,[d]: I18N.ui[LANG].cat_name_d,[a]: I18N.ui[LANG].cat_name_a,[gx]: I18N.ui[LANG].cat_name_gx};
-  const msg = [
-    I18N.ui[LANG].cat_report_title,
-    `${mapName[w]}：${(c[w]?.count||0)}  / RM ${(c[w]?.amount||0).toFixed(2)}`,
-    `${mapName[d]}：${(c[d]?.count||0)}  / RM ${(c[d]?.amount||0).toFixed(2)}`,
-    `${mapName[a]}：${(c[a]?.count||0)}  / RM ${(c[a]?.amount||0).toFixed(2)}`,
-    `${mapName[gx]}：${(c[gx]?.count||0)} / RM ${(c[gx]?.amount||0).toFixed(2)}`
-  ].join("\n");
-  alert(msg);
-}
-function exportCSV(){
-  const k=todayKey(), st=JSON.parse(localStorage.getItem(k)||"{}");
-  const headers=[t('csv_time'),t('csv_table'),t('csv_type'),t('csv_items'),t('csv_total'),t('csv_note')];
-  const rows=[headers.join(",")];
-  (st.list||[]).forEach(r=>{
-    let itemsStr="";
-    if(Array.isArray(r.items_struct)&&r.items_struct.length){
-      itemsStr=r.items_struct.map(it=>`${nameOf(it.id)} × ${it.qty} = RM ${(+it.amount).toFixed(2)}`).join(" | ");
-    }else{
-      itemsStr=(r.lines||[]).join(" | ");
-    }
-    rows.push([r.time,r.table,r.type,itemsStr.replace(/,/g," "),"RM "+(+r.total).toFixed(2),(r.note||"").replace(/,/g," ")].join(","));
-  });
-  const blob=new Blob([rows.join("\n")],{type:"text/csv;charset=utf-8"});
-  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
-  a.download=`lyx_today_${todayKey().slice(-10)}.csv`; a.click();
-}
-const DELETE_PWD="Lyx115599$";
-function deleteWithPwd(){
-  const p=prompt("输入密码以清空今天统计");
-  if(p!==DELETE_PWD){ alert("密码错误"); return; }
-  localStorage.removeItem(todayKey());
-  showKpis(); alert("已清空今天统计");
-}
+        const cloudPayload = {
+          secret: CLOUD.SECRET,
+          spreadsheetId: CLOUD.SPREADSHEET_ID,
+          table, type, note, lang: LANG,
+          items: itemsArr.map(it => ({ id: it.id, name: nameOf(it.id), qty: it.qty, amount: it.amount })),
+          total: +subtotal.toFixed(2)
+        };
+        let ok = false;
+        try{
+          const res = await fetch(CLOUD.ENDPOINT, {
+            method:'POST', headers:{'Content-Type':'application/json'},
+            body: JSON.stringify(cloudPayload)
+          });
+          if(res.ok){
+            const j = await res.json().catch(()=>({ok:false}));
+            ok = !!(j && j.ok);
+          }
+        }catch(e){ ok = false; }
+        if(!ok){ alert('云端上传失败（网络/权限）。本机已保存，稍后再试。'); }
+        else   { alert('云端上传成功 ✅'); }
 
-/* ========= 语言按钮 / 事件绑定 ========= */
-function setLang(next){
-  LANG = next;
-  document.getElementById('btn-zh').classList.toggle('active', next==='zh');
-  document.getElementById('btn-en').classList.toggle('active', next==='en');
-  document.getElementById('btn-vi').classList.toggle('active', next==='vi');
-  renderAll();
-}
-function bindButtonsSafely(){
-  const bind=(id,fn)=>{
-    const el=document.getElementById(id); if(!el) return;
-    const fresh=el.cloneNode(true); el.parentNode.replaceChild(fresh,el);
-    fresh.id=id; fresh.addEventListener('click',fn);
-  };
-  bind('btn-print', printReceipt);
-  bind('btn-done',  finishAndSend);
-  bind('btn-view',  viewToday);
-  bind('btn-cat',   viewByCategory);
-  bind('btn-csv',   exportCSV);
-  bind('btn-del',   deleteWithPwd);
-  document.getElementById('btn-zh').onclick=()=>setLang('zh');
-  document.getElementById('btn-en').onclick=()=>setLang('en');
-  document.getElementById('btn-vi').onclick=()=>setLang('vi');
-}
+        for(const k in cart) delete cart[k];
+        renderCart(); showKpis();
+      } finally {
+        __SENDING__ = false;
+        if(btn){
+          btn.disabled = false;
+          btn.textContent = btnText || t('done') || '完成并统计';
+        }
+      }
+    };
+  }
 
-/* 把 onclick 用到的方法挂到 window，兼容 WebViewer */
-Object.assign(window,{
-  inc,dec,addToCart,printReceipt,finishAndSend,
-  viewToday,viewByCategory,exportCSV,deleteWithPwd,setLang
-});
+  /* ---------- Sanitize printing ---------- */
+  if (typeof printReceipt === 'function'){
+    window.printReceipt = function(){
+      if(Object.keys(cart||{}).length===0){ alert(t('alert_empty')); return; }
+      const area=document.getElementById('print-area'); area.classList.remove('hidden');
+      const table=document.getElementById('tableNo').value||'-';
+      const type=document.getElementById('takeaway').checked?t('takeaway'):t('dinein');
+      let subtotal=0, body='';
+      Object.keys(cart).forEach(id=>{
+        const qty=cart[id], line=priceOf(id)*qty; subtotal+=line;
+        body+=`<div>${__escapeHTML__(nameOf(id))} × ${qty}<span style="float:right">${__fmtRM__(line)}</span></div>`;
+      });
+      area.innerHTML=`
+      <div style="max-width:340px;margin:0 auto;font-size:13px;line-height:1.35;color:#000;background:#fff;padding:8px;border:2px dashed ${getComputedStyle(document.documentElement).getPropertyValue('--line')}">
+        <div style="text-align:center;font-weight:900;color:#b30f17">${__escapeHTML__(t('title_main'))}<br><small style="color:#333">${__escapeHTML__(t('title_sub'))}</small></div>
+        <div>${__escapeHTML__(t('time'))}: ${new Date().toLocaleString()}</div>
+        <div>${__escapeHTML__(t('table'))}: ${__escapeHTML__(table)}</div>
+        <div>${__escapeHTML__(t('type'))}: ${__escapeHTML__(type)}</div>
+        <hr>${body}<hr>
+        <div style="font-weight:900">${__escapeHTML__(t('sum_total'))}: ${__fmtRM__(subtotal)}</div>
+      </div>`;
+      window.print(); area.classList.add('hidden');
+    };
+  }
+  </script>
+  <!-- === /FINAL OPTIMIZATION PATCH === -->
 
-document.addEventListener("DOMContentLoaded", ()=>{ renderAll(); bindButtonsSafely(); });
-</script>
 </body>
 </html>
