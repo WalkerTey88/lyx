@@ -367,10 +367,16 @@ function t(k){return I18N.ui[LANG][k]||k;}
 function tItemName(id,fallback){return I18N.items[id]?.[LANG]||fallback;}
 
 /* ====== Cloud Sync（Google Apps Script Web 应用接口） ====== */
+/* ====== Cloud Sync（Google Apps Script Web 应用接口） ====== */
 const CLOUD = {
-  ENDPOINT: 'https://script.google.com/macros/s/AKfycbwzR2jwQoxlvvc5Cwt_8rUBkPoEuBGsdmGV1PFwK-DsnZv54kMbCdW6qDAVWxaDIl/exec',
-  SECRET: 'Lyx115599$api',  // 必须和代码.gs 里的 CONFIG.SECRET 一致
-  SPREADSHEET_ID: '1qp2cVnrn-oDIGlXcdqM94lsjRm_NiHu0SsKWNNu_Jx4' // 你的 Google 表格 ID
+  // 这里换成你在 Apps Script 部署后得到的 Web 应用 URL
+  ENDPOINT: 'https://script.google.com/macros/s/AKfycby84C0cXqeQzruVq9U5MdSCwur8V42yMNTKPW0909cNx1NBUk0LUbPDQrht588HEuUOhA/exec',
+
+  // 必须和代码.gs 里 CONFIG.SECRET 完全一致
+  SECRET: 'Lyx115599$api',
+
+  // 你的 Google 表格 ID（固定不变）
+  SPREADSHEET_ID: '1mEx1LPaFYsBisXs5mOp-TA_P_9ntfpvMSVzdyKUveKk'
 };
 function getDeviceId(){
   const k='lyx_device_id';
