@@ -6,184 +6,137 @@
 <title>龍運轩ᝰ美食中心 · LYX Food Center</title>
 <meta name="color-scheme" content="light">
 <style>
-/* ============== 红底 / 金色标题卡 / 全站黑字（指定处白字） / 金线 / 金按钮 ============== */
+/* ============== 红包风主题（红底 / 金按钮 / 白字 / 金线） ============== */
 :root{
-  --bg:#9b0b14;             /* 大红背景 */
-  --bg-deep:#7e0810;        /* 深红渐变 */
-  --card:#b70e18;           /* 卡片红 */
-  --ink:#111111;            /* 主文字=黑色 */
-  --mut:#3a3a3a;            /* 次要文字=深灰（黑系） */
+  --bg:#9b0b14;             /* 整体大红（背景） */
+  --bg-deep:#7e0810;        /* 深红（渐变用） */
+  --card:#b70e18;           /* 卡片红（比背景略亮） */
+  --ink:#ffffff;            /* 主文字白 */
+  --mut:#ffeecf;            /* 次要文字（金米白） */
   --line:#f1d27a;           /* 金色线条 */
-  --brand:#f2c84b;          /* 金色主按钮/块 */
-  --brand-ink:#5a3b00;      /* 金面上的字=深棕 */
-  --ok:#f2c84b;             /* 主行动按钮=金色 */
+  --brand:#f2c84b;          /* 金色主按钮 */
+  --brand-ink:#5a3b00;      /* 金色按钮上的字（深棕） */
+  --ok:#f2c84b;             /* 主行动按钮也用金色 */
   --accent:#ffd86b;         /* 柔金 */
   --shadow:0 10px 28px rgba(0,0,0,.18);
   --ring:0 0 0 3px rgba(242,200,75,.25);
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{
-  margin:0;
-  background:linear-gradient(180deg,var(--bg),var(--bg-deep));
-  color:var(--ink);
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif
-}
+html,body{margin:0;background:linear-gradient(180deg,var(--bg),var(--bg-deep));color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
 a{text-decoration:none;color:inherit}
 .wrap{max-width:1200px;margin:20px auto;padding:0 12px 24px}
-
-/* ---- 顶部：logo 固定 72x<=240 + 语言切换 ---- */
 header{
   position:sticky;top:0;z-index:9;
-  padding:12px 16px;
+  padding:12px 16px;color:#fff;
   border-bottom:2px solid var(--line);
   background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(0,0,0,0));
   backdrop-filter:saturate(120%) blur(4px)
 }
 .head{display:flex;align-items:center;gap:10px}
-header .logo{
-  height:72px; width:auto; max-width:240px; display:block;
-  border-radius:10px; box-shadow:0 6px 14px rgba(0,0,0,.35);
-  outline:2px solid rgba(255,255,255,.15)
-}
-/* 标题节点隐藏但保留（给脚本 setText 用） */
-h1{margin:0;font-size:20px;letter-spacing:.5px;display:none}
-h1 small{opacity:.9;color:#222}
+.logo{height:40px;width:auto;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,.25);display:block}
+h1{margin:0;font-size:20px;letter-spacing:.5px;display:flex;gap:10px;align-items:baseline}
+h1 small{opacity:.9;color:var(--mut)}
 .lang{display:flex;gap:8px;margin-left:auto;flex-wrap:wrap}
 .lang button{
   padding:6px 12px;border-radius:999px;border:1.5px solid var(--line);
-  background:transparent;color:#111;cursor:pointer;font-weight:900
+  background:transparent;color:#fff;cursor:pointer;font-weight:900
 }
-.lang button.active{
-  background:linear-gradient(180deg,#ffe38a,#f2c84b);
-  color:var(--brand-ink);
-  box-shadow:0 4px 10px rgba(0,0,0,.2), inset 0 -2px 0 rgba(0,0,0,.12)
-}
+.lang button.active{background:var(--brand);color:var(--brand-ink)}
 
-/* ---- 网格与面板 ---- */
 .grid{display:grid;grid-template-columns:2fr 1fr;gap:16px}
 @media (max-width:980px){.grid{grid-template-columns:1fr}}
 .panel{
   background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03));
-  border:1.5px solid var(--line);border-radius:18px;box-shadow:var(--shadow)
+  border:1.5px solid var(--line);border-radius:16px;box-shadow:var(--shadow)
 }
-/* 面板标题条 = 金色底 + 黑字 */
-.panel h3{
-  margin:0;padding:14px 16px;
-  border-bottom:1.5px dashed var(--line);
-  font-size:16px;display:flex;align-items:center;gap:8px;
-  background:linear-gradient(180deg,#ffe38a,#f2c84b);
-  color:#111;border-top-left-radius:18px;border-top-right-radius:18px
-}
+.panel h3{margin:0;padding:14px 16px;border-bottom:1.5px dashed var(--line);font-size:16px;display:flex;align-items:center;gap:8px}
 .section{padding:12px 12px 18px}
 
-/* ---- 控件行 ---- */
 .controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:0 6px 10px}
-/* label ＝ 特殊要求：粗白（备注、桌号同样样式） */
-.label{font-weight:900;color:#ffffff !important; letter-spacing:.3px; text-shadow:0 1px 0 rgba(0,0,0,.25)}
+.label{font-weight:900;color:var(--mut)}
 .input{
   padding:10px;border:1.5px solid var(--line);border-radius:12px;min-width:140px;
-  background:rgba(255,255,255,.10);color:#ffffff; /* 输入内容=粗白 */
-  font-weight:900
+  background:rgba(255,255,255,.08);color:var(--ink)
 }
-.input::placeholder{color:#ffffffcc}
+.input::placeholder{color:#ffefcfaa}
 .input:focus{outline:none;box-shadow:var(--ring);border-color:var(--accent)}
-.switch{
-  display:flex;gap:8px;align-items:center;border:1.5px solid var(--line);
-  border-radius:12px;padding:8px 10px;background:rgba(255,255,255,.08);color:#111;font-weight:900
-}
+.switch{display:flex;gap:8px;align-items:center;border:1.5px solid var(--line);border-radius:12px;padding:8px 10px;background:rgba(255,255,255,.06)}
 
-/* ---- 分类整块：金色卡片（标题/提示黑字） ---- */
-details{
-  background:linear-gradient(180deg,#ffe38a,#f2c84b);
-  border:1.5px solid #e7c14b;
-  border-radius:16px;
-  margin:10px 0;
-  color:#111;
-  box-shadow:0 10px 24px rgba(0,0,0,.25), inset 0 -1px 0 rgba(255,255,255,.25)
-}
+details{border:1.5px solid var(--line);border-radius:14px;margin:10px 0;background:rgba(255,255,255,.04)}
 summary{
-  list-style:none; cursor:pointer;
-  padding:14px 16px; border-radius:16px;
-  display:flex; justify-content:space-between; align-items:center; font-weight:900;
-  background:transparent; border-left:0
+  list-style:none;cursor:pointer;padding:12px 14px;border-radius:14px;display:flex;justify-content:space-between;align-items:center;font-weight:900;
+  background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.06));border-left:5px solid var(--accent)
 }
 summary::marker,summary::-webkit-details-marker{display:none}
-/* 左侧标题、右侧小提示都黑字 */
-summary > span:first-child{ color:#111; font-weight:900; letter-spacing:.2px }
-.cat-sub{ color:#111; font-weight:700; font-size:12px; opacity:.95 }
+.cat-sub{color:var(--mut);font-weight:700;font-size:12px}
 
-/* ---- 菜品卡 ---- */
-.cards{padding:12px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.cards{padding:10px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 @media (max-width:720px){.cards{grid-template-columns:1fr}}
-.item{
-  border:1.5px solid var(--line);border-radius:14px;padding:12px;
-  background:rgba(255,255,255,.86); /* 浅白底，黑字更清晰更“高级” */
-  display:flex;gap:12px;align-items:center;
-  transition:transform .08s ease, box-shadow .12s ease, background .2s ease
-}
-.item:hover{transform:translateY(-1px);box-shadow:0 12px 26px rgba(0,0,0,.28);background:#fff}
-.item .left{flex:1}
-.title{font-weight:900;color:#111}
-.sub{color:#333;font-size:12px;line-height:1.25}
-.qty{min-width:56px;text-align:center;font-weight:900;color:#111;background:#fff;border-radius:10px;border:1px solid var(--line)}
 
-/* ---- 按钮（全金色系），防误触态 ---- */
-.btn{
-  padding:10px 14px;border:1.5px solid var(--line);border-radius:12px;
-  background:linear-gradient(180deg,#ffe38a,#f2c84b);
-  cursor:pointer;font-weight:900;letter-spacing:.2px;color:var(--brand-ink);
-  box-shadow:inset 0 -2px 0 rgba(0,0,0,.12), 0 6px 16px rgba(0,0,0,.18);
-  transition:transform .06s ease, filter .06s ease, box-shadow .12s ease
+.item{
+  border:1.5px solid var(--line);border-radius:14px;padding:12px;background:rgba(255,255,255,.06);display:flex;gap:12px;align-items:center;
+  transition:transform .08s ease, box-shadow .12s ease
 }
-.btn:hover{filter:brightness(1.02)}
-.btn:active{transform:translateY(1px);box-shadow:inset 0 -1px 0 rgba(0,0,0,.18)}
+.item:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,0,0,.22)}
+.item .left{flex:1}
+.title{font-weight:900}
+.sub{color:var(--mut);font-size:12px;line-height:1.25}
+.qty{min-width:56px;text-align:center;font-weight:900;color:#fff}
+
+.btn{
+  padding:10px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--brand);cursor:pointer;
+  font-weight:900;letter-spacing:.2px;color:var(--brand-ink);box-shadow:inset 0 -2px 0 rgba(0,0,0,.12)
+}
 .btn.small{padding:10px 14px;font-size:18px;border-width:2px}
-.btn.add{background:linear-gradient(180deg,#ffe38a,#f2c84b)}
+.btn.add{background:var(--brand)}
+/* 保留 WebView 反色修复，但改为红金主题 */
 .tools .btn{min-width:140px;text-align:center}
 body{color-scheme: light;}
 
-/* ---- 右侧订单面板 ---- */
 .sticky{position:sticky;top:86px}
 .sumrow{display:flex;gap:10px;margin-top:10px}
 .sumrow .btn.print{
-  flex:1;background:transparent;border-style:dashed;color:#111;background:#fff
+  flex:1;background:transparent;border-style:dashed;color:#fff
 }
 .sumrow .btn.done{
   flex:3;background:linear-gradient(180deg,#ffe38a,#f2c84b);border-color:#e7c14b;color:var(--brand-ink)
 }
-/* 备注文本框内容＝粗白色（点名要求），但外观高端：红金边+半透明底 */
 .note{
-  width:100%;min-height:72px;border:1.5px solid var(--line);border-radius:12px;padding:12px;margin-top:10px;
-  background:rgba(255,255,255,.10);color:#ffffff;font-weight:900;letter-spacing:.2px;
-  text-shadow:0 1px 0 rgba(0,0,0,.25)
+  width:100%;min-height:68px;border:1.5px solid var(--line);border-radius:12px;padding:10px;margin-top:10px;
+  background:rgba(255,255,255,.06);color:#fff
 }
-.note::placeholder{color:#ffffffcc}
+.note::placeholder{color:#ffefcfaa}
 .sum{border-top:1.5px dashed var(--line);padding-top:10px;margin-top:10px}
 
-/* KPI 卡片保持红金风格但黑字可读 */
 .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
-.kpi{
-  border:1.5px solid var(--line);border-radius:12px;padding:10px;
-  background:linear-gradient(180deg,rgba(255,255,255,.90),rgba(255,255,255,.82));
-  text-align:center;color:#111
-}
-.kpi b{display:block;font-size:18px;color:#111}
+.kpi{border:1.5px solid var(--line);border-radius:12px;padding:10px;background:rgba(255,255,255,.06);text-align:center}
+.kpi b{display:block;font-size:18px;color:#fff}
 
 .tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-.tag{font-size:11px;border:1px solid var(--line);color:#111;padding:2px 6px;border-radius:999px;background:#fff}
+.tag{font-size:11px;border:1px solid var(--line);color:#ffeecf;padding:2px 6px;border-radius:999px}
 .hidden{display:none}
+
+/* ===== Fixed header logo slot (72 x 240) ===== */
+header .head{display:flex;align-items:center;justify-content:flex-start}
+header .logo{
+  height:72px;     /* 固定高度 72px */
+  width:auto;
+  max-width:240px; /* 最大宽度 240px */
+  display:block;
+}
+
 </style>
 </head>
 <body>
 <header>
   <div class="head">
-    <!-- 只保留这一张 logo，固定高72、最大宽240 -->
-    <img src="logo.png" alt="LYX Logo" class="logo" onerror="this.style.display='none'">
-    <!-- 标题节点保留但隐藏，供脚本赋值（不显示第二个 logo） -->
-    <h1>
-      <span id="title-main"></span>
-      <small id="title-sub"></small>
-    </h1>
+    <!-- 放 logo.png 即会显示；没有则隐藏 -->
+    <img src="logo.png" alt="logo" class="logo" onerror="this.style.display='none'">
+    <h1 class="head">
+  <img src="logo.png" alt="LYX Logo" class="logo">
+  <span id="title-main" style="display:none"></span>
+  <small id="title-sub" style="display:none"></small>
+</h1>
     <div class="lang">
       <button id="btn-zh" class="active">中文</button>
       <button id="btn-en">English</button>
@@ -278,7 +231,7 @@ body{color-scheme: light;}
 <script>
 /* ====== 全局报错可视化（避免白屏） ====== */
 window.onerror = function(msg, src, line, col){
-  alert("脚本错误：\\n" + msg + "\\n@" + (src||'inline') + ":" + line + ":" + col);
+  alert("脚本错误：\n" + msg + "\n@" + (src||'inline') + ":" + line + ":" + col);
 };
 
 /* ========== I18N 多语言 ========== */
@@ -331,13 +284,16 @@ const I18N = {
       time:"Thời gian",type:"Loại",
       csv_time:"Thời gian",csv_table:"Bàn",csv_type:"Loại",csv_items:"Món",csv_total:"Tổng",csv_note:"Ghi chú"}
   },
+  // 菜名翻译（未列出的用中文名）
   items:{
+    /* 1) WONTON */
     w_small:{en:"Wonton Noodles (S)",vi:"Mì hoành thánh (Nhỏ)"},
     w_mid:{en:"Wonton Noodles (M)",vi:"Mì hoành thánh (Vừa)"},
     w_big:{en:"Wonton Noodles (L)",vi:"Mì hoành thánh (Lớn)"},
     w_wantan_dry:{en:"Wontons (Dry, per portion)",vi:"Hoành thánh khô (1 phần)"},
     w_wantan_soup:{en:"Wontons (Soup, per portion)",vi:"Hoành thánh nước (1 phần)"},
     w_add3:{en:"Add-on: 3 Wontons",vi:"Thêm: 3 hoành thánh"},
+    /* 2) DRINKS */
     d_coffee_hot:{en:"Coffee (Hot)",vi:"Cà phê (Nóng)"},
     d_coffee_ice:{en:"Coffee (Iced)",vi:"Cà phê (Đá)"},
     d_coffeeC_hot:{en:"Coffee C (Hot)",vi:"Cà phê C (Nóng)"},
@@ -357,6 +313,7 @@ const I18N = {
     d_miloO_hot:{en:"Milo O (Hot)",vi:"Milo O (Nóng)"},
     d_miloO_ice:{en:"Milo O (Iced)",vi:"Milo O (Đá)"},
     d_canned:{en:"Canned Water",vi:"Nước lon"},
+    /* 3) Auntie 主食 + 加料 */
     a_bitter_rice_noodle:{en:"Bitter Gourd Bee Hoon",vi:"Bún khổ qua"},
     a_nasi_ayam:{en:"Nasi Lemak (Chicken)",vi:"Nasi Lemak (gà)"},
     a_nasi_egg:{en:"Nasi Lemak (Egg only)",vi:"Nasi Lemak (trứng)"},
@@ -374,6 +331,7 @@ const I18N = {
     a_add_pickled_tofu:{en:"Pickled Tofu (add-on)",vi:"Đậu phụ chua (thêm)"},
     a_add_wing:{en:"Fried Chicken Wing",vi:"Cánh gà chiên"},
     a_add_fried_egg:{en:"Fried Egg",vi:"Trứng ốp la"},
+    /* 4) Guangxi */
     gx_su:{en:"Plain Rice Roll (kosong)",vi:"Bánh cuốn trơn (kosong)"},
     gx_veg:{en:"Veg Rice Roll",vi:"Bánh cuốn rau"},
     gx_meatveg:{en:"Meat + Veg Rice Roll",vi:"Bánh cuốn thịt + rau"},
@@ -386,18 +344,20 @@ const I18N = {
 function t(k){return I18N.ui[LANG][k]||k;}
 function tItemName(id,fallback){return I18N.items[id]?.[LANG]||fallback;}
 
-/* ====== Cloud Sync 配置（填入你的值） ====== */
+/* ====== Cloud Sync 配置（保持你的旧逻辑；填入你的值即可） ====== */
 const CLOUD = {
-  ENDPOINT: 'https://script.google.com/macros/s/XXXXXXXXXXXXXXXXXXXX/exec',
-  SECRET: 'Lyx115599$api',
-  SPREADSHEET_ID: 'YOUR_SPREADSHEET_ID'
+  ENDPOINT: 'https://script.google.com/macros/s/XXXXXXXXXXXXXXXXXXXX/exec', // TODO: 你的 Apps Script Web 应用 URL
+  SECRET: 'Lyx115599$api',  // TODO: 若 Apps Script 里设置了 LYX_SECRET，要与之匹配
+  SPREADSHEET_ID: 'YOUR_SPREADSHEET_ID' // TODO: 你的 Google 表格ID（如果 WebApp 就建在该表里，可留空）
 };
+// 设备ID（本机持久）
 function getDeviceId(){
   const k='lyx_device_id';
   let v=localStorage.getItem(k);
   if(!v){ v='dev_'+Math.random().toString(36).slice(2); localStorage.setItem(k,v); }
   return v;
 }
+// 云端发送（保留你的 sendToCloud 逻辑）
 async function sendToCloud(payload){
   try{
     const res = await fetch(CLOUD.ENDPOINT, {
@@ -454,6 +414,7 @@ const AUNTIE=[
   {id:"a_mianxian",           name:"面线",               price:6.00},
   {id:"a_lu_rou_fan",         name:"卤肉饭",             price:6.00},
   {id:"a_kuey_teow_soup",     name:"果条汤",             price:6.00},
+  // 加料
   {id:"a_add_century_egg",       name:"加皮蛋",     price:1.00},
   {id:"a_add_pickled_cucumber",  name:"酸笋瓜",     price:1.50},
   {id:"a_add_pickled_okra",      name:"酸羊角豆",   price:1.50},
@@ -498,6 +459,7 @@ function renderCategory(elId,list){
   el.innerHTML=list.map(itemCard).join("");
 }
 function renderAll(){
+  // 文案
   document.getElementById('title-main').textContent=t('title_main');
   document.getElementById('title-sub').textContent=t('title_sub');
   document.getElementById('panel-order').textContent=t('order');
@@ -516,6 +478,7 @@ function renderAll(){
   document.getElementById('btn-del').textContent=t('tool_del');
   document.getElementById('note').placeholder=t('note_ph');
 
+  // 分类标题
   document.getElementById('sum-wonton').textContent=t('cat_wonton');
   document.getElementById('tip-wonton').textContent=t('cat_wonton_tip');
   document.getElementById('sum-drinks').textContent=t('cat_drinks');
@@ -525,6 +488,7 @@ function renderAll(){
   document.getElementById('sum-gx').textContent=t('cat_gx');
   document.getElementById('tip-gx').textContent=t('cat_gx_tip');
 
+  // 菜单卡片
   renderCategory("cat-wonton", WONTON);
   renderCategory("cat-drinks", DRINKS);
   renderCategory("cat-auntie", AUNTIE);
@@ -552,6 +516,7 @@ function renderCart(){
 
 /* ========= 本地统计 ========= */
 function todayKey(){
+  // 固定按马来西亚时区划分“今天”，避免不同手机时差导致看不到今天数据
   const fmt = new Intl.DateTimeFormat('en-CA', {
     timeZone: 'Asia/Kuala_Lumpur',
     year: 'numeric', month: '2-digit', day: '2-digit'
@@ -579,6 +544,7 @@ function finishAndSend(){
   const type  = document.getElementById('takeaway').checked ? t('takeaway') : t('dinein');
   const note  = (document.getElementById('note').value||"").trim();
 
+  // 计算本单
   let subtotal=0, itemsCount=0, lines=[], itemsArr=[];
   Object.keys(cart).forEach(id=>{
     const qty=cart[id]; itemsCount+=qty;
@@ -587,6 +553,7 @@ function finishAndSend(){
     itemsArr.push({id, qty, amount:+lineAmt.toFixed(2)});
   });
 
+  // 写统计（总体+分类）
   const st=loadStats();
   st.orders += 1; st.items += itemsCount; st.sales = +(st.sales + subtotal).toFixed(2);
   const catMap={
@@ -604,7 +571,8 @@ function finishAndSend(){
   st.list.push({time:new Date().toLocaleString(), table, type, lines, items_struct:itemsArr, total:subtotal, note});
   saveStats(st);
 
-  alert(`已保存到本机统计。\\n订单笔数：${st.orders}，销售额：RM ${st.sales.toFixed(2)}。\\n将尝试上传到云端…`);
+  // —— 先提示本机已保存，然后尝试上云（不阻塞收银）
+  alert(`已保存到本机统计。\n订单笔数：${st.orders}，销售额：RM ${st.sales.toFixed(2)}。\n将尝试上传到云端…`);
   const cloudPayload = {
     secret: CLOUD.SECRET || '',
     spreadsheetId: CLOUD.SPREADSHEET_ID || '',
@@ -618,7 +586,8 @@ function finishAndSend(){
     if(!ok){ alert('云端上传失败（网络/权限）。本机已保存，稍后再试。'); }
   });
 
-  const NL = "\\n";
+  // 组合消息 → 打开 WhatsApp（外链 & 兜底 Scheme）
+  const NL = "\n";
   const msg = [
     `${t('title_main')} 订单`,
     `${t('table')}: ${table}`,
@@ -632,6 +601,7 @@ function finishAndSend(){
   if(!opened){ location.href=url; }
   setTimeout(()=>{ try{ location.href = "whatsapp://send?text=" + encodeURIComponent(msg); }catch(e){} },600);
 
+  // 清空购物车
   for(const k in cart) delete cart[k];
   renderCart(); showKpis();
 }
@@ -670,11 +640,72 @@ function viewToday(){
   };
   const lines=(st.list||[]).map((r,i)=>{
     const rebuilt = toLines(r);
-    return `${i+1}. [${r.time}] ${r.table}/${r.type}\\n   ${rebuilt.join("\\n   ")}\\n   ${I18N.ui.en.sum_total}: RM ${(+r.total).toFixed(2)}${r.note?("\\n   "+t('note_label')+": "+r.note):""}`;
-  }).join("\\n\\n");
-  alert((lines||t('today_none')) + `\\n\\n${t('k_orders')}: ${st.orders} | ${t('k_items')}: ${st.items} | ${t('k_sales')}: RM ${st.sales.toFixed(2)}`);
+    return `${i+1}. [${r.time}] ${r.table}/${r.type}\n   ${rebuilt.join("\n   ")}\n   ${I18N.ui.en.sum_total}: RM ${(+r.total).toFixed(2)}${r.note?("\n   "+t('note_label')+": "+r.note):""}`;
+  }).join("\n\n");
+  alert((lines||t('today_none')) + `\n\n${t('k_orders')}: ${st.orders} | ${t('k_items')}: ${st.items} | ${t('k_sales')}: RM ${st.sales.toFixed(2)}`);
 }
 function viewByCategory(){
   const st=loadStats(); const c=st.cats||{};
   const w = I18N.ui.zh.cat_name_w, d = I18N.ui.zh.cat_name_d, a = I18N.ui.zh.cat_name_a, gx = I18N.ui.zh.cat_name_gx;
   const mapName = {[w]: I18N.ui[LANG].cat_name_w,[d]: I18N.ui[LANG].cat_name_d,[a]: I18N.ui[LANG].cat_name_a,[gx]: I18N.ui[LANG].cat_name_gx};
+  const msg = [
+    I18N.ui[LANG].cat_report_title,
+    `${mapName[w]}：${(c[w]?.count||0)}  / RM ${(c[w]?.amount||0).toFixed(2)}`,
+    `${mapName[d]}：${(c[d]?.count||0)}  / RM ${(c[d]?.amount||0).toFixed(2)}`,
+    `${mapName[a]}：${(c[a]?.count||0)}  / RM ${(c[a]?.amount||0).toFixed(2)}`,
+    `${mapName[gx]}：${(c[gx]?.count||0)} / RM ${(c[gx]?.amount||0).toFixed(2)}`
+  ].join("\n");
+  alert(msg);
+}
+function exportCSV(){
+  const k=todayKey(), st=JSON.parse(localStorage.getItem(k)||"{}");
+  const headers=[t('csv_time'),t('csv_table'),t('csv_type'),t('csv_items'),t('csv_total'),t('csv_note')];
+  const rows=[headers.join(",")];
+  (st.list||[]).forEach(r=>{
+    let itemsStr="";
+    if(Array.isArray(r.items_struct)&&r.items_struct.length){
+      itemsStr=r.items_struct.map(it=>`${nameOf(it.id)} × ${it.qty} = RM ${(+it.amount).toFixed(2)}`).join(" | ");
+    }else{
+      itemsStr=(r.lines||[]).join(" | ");
+    }
+    rows.push([r.time,r.table,r.type,itemsStr.replace(/,/g," "),"RM "+(+r.total).toFixed(2),(r.note||"").replace(/,/g," ")].join(","));
+  });
+  const blob=new Blob([rows.join("\n")],{type:"text/csv;charset=utf-8"});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download=`lyx_today_${todayKey().slice(-10)}.csv`; a.click();
+}
+const DELETE_PWD="Lyx115599$";
+function deleteWithPwd(){
+  const p=prompt("输入密码以清空今天统计");
+  if(p!==DELETE_PWD){ alert("密码错误"); return; }
+  localStorage.removeItem(todayKey());
+  showKpis(); alert("已清空今天统计");
+}
+
+/* ========= 语言按钮 / 事件绑定（稳固） ========= */
+function setLang(next){
+  LANG = next;
+  document.getElementById('btn-zh').classList.toggle('active', next==='zh');
+  document.getElementById('btn-en').classList.toggle('active', next==='en');
+  document.getElementById('btn-vi').classList.toggle('active', next==='vi');
+  renderAll();
+}
+function bindButtonsSafely(){
+  const bind=(id,fn)=>{
+    const el=document.getElementById(id); if(!el) return;
+    const fresh=el.cloneNode(true); el.parentNode.replaceChild(fresh,el);
+    fresh.id=id; fresh.addEventListener('click',fn);
+  };
+  bind('btn-print', printReceipt);
+  bind('btn-done',  finishAndSend);
+  bind('btn-view',  viewToday);
+  bind('btn-cat',   viewByCategory);
+  bind('btn-csv',   exportCSV);
+  bind('btn-del',   deleteWithPwd);
+  document.getElementById('btn-zh').onclick=()=>setLang('zh');
+  document.getElementById('btn-en').onclick=()=>setLang('en');
+  document.getElementById('btn-vi').onclick=()=>setLang('vi');
+}
+document.addEventListener("DOMContentLoaded", ()=>{ renderAll(); bindButtonsSafely(); });
+</script>
+</body>
