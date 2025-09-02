@@ -35,9 +35,9 @@ header{
 }
 .head{display:flex;align-items:center;gap:10px}
 header .logo{
-  height:70px;           /* 你要的高度 */
+  height:70px;           /* 按你要求：高70 */
   width:auto;
-  max-width:190px;       /* 你要的最大宽 */
+  max-width:190px;       /* 最大宽190 */
   display:block;
   border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,.25);
 }
@@ -104,7 +104,7 @@ summary > span:first-child{ color:#5a3b00; font-weight:900; }
 
 /* 右侧操作区：横排 - 数量 +，并拉开间距 */
 .actions{
-  display:flex; align-items:center; gap:16px; /* 间距你可调大/小 */
+  display:flex; align-items:center; gap:16px;
   margin-bottom:8px; justify-content:flex-end;
 }
 .actions .btn.small{min-width:44px;}
@@ -134,8 +134,6 @@ summary > span:first-child{ color:#5a3b00; font-weight:900; }
 body{color-scheme: light;}
 .sticky{position:sticky;top:86px}
 .sumrow{display:flex;gap:10px;margin-top:10px}
-
-/* 打印 & 完成 */
 .sumrow .btn.print{ flex:1; }
 .sumrow .btn.done{ flex:3; }
 
@@ -233,7 +231,7 @@ body{color-scheme: light;}
       <textarea id="note" class="note" placeholder="例如：少甜 / 少冰 / 加辣"></textarea>
       <div class="sumrow">
         <button class="btn print" id="btn-print">打印小票</button>
-        <button class="btn done" id="btn-done">完成并统计（群聊）</button>
+        <button class="btn done" id="btn-done">完成并统计</button>
       </div>
 
       <div class="kpis">
@@ -272,7 +270,7 @@ const I18N = {
       cat_auntie:"婶婶档",cat_auntie_tip:"点击展开/收起",
       cat_gx:"广西卷筒粉",cat_gx_tip:"点击展开/收起",
       note_label:"备注",note_ph:"例如：少甜 / 少冰 / 加辣",
-      print:"打印小票",done:"完成并统计（群聊）",
+      print:"打印小票",done:"完成并统计",
       k_orders:"订单笔数",k_items:"售出件数",k_sales:"销售金额",
       tool_today:"查看明细",tool_cat:"分类统计",tool_csv:"导出今日 CSV",tool_del:"删单（需密码）",
       sum_total:"合计 Total",alert_pick:"请先选择项目",alert_empty:"没有项目",
@@ -287,7 +285,7 @@ const I18N = {
       cat_auntie:"Auntie's Stall",cat_auntie_tip:"Tap to expand/collapse",
       cat_gx:"Guangxi Rolls",cat_gx_tip:"Tap to expand/collapse",
       note_label:"Note",note_ph:"e.g. less sweet / less ice / extra spicy",
-      print:"Print Receipt",done:"Finish & Send (Group)",
+      print:"Print Receipt",done:"Finish & Save",
       k_orders:"Orders",k_items:"Items",k_sales:"Sales",
       tool_today:"View Today",tool_cat:"By Category",tool_csv:"Export Today CSV",tool_del:"Delete (password)",
       sum_total:"Total",alert_pick:"Please add items first",alert_empty:"No items",
@@ -302,7 +300,7 @@ const I18N = {
       cat_auntie:"Quầy của Cô",cat_auntie_tip:"Nhấn để mở/đóng",
       cat_gx:"Bánh cuốn Quảng Tây",cat_gx_tip:"Nhấn để mở/đóng",
       note_label:"Ghi chú",note_ph:"vd: ít ngọt / ít đá / thêm cay",
-      print:"In hóa đơn",done:"Hoàn tất & gửi (nhóm)",
+      print:"In hóa đơn",done:"Hoàn tất & Lưu",
       k_orders:"Đơn",k_items:"Món",k_sales:"Doanh thu",
       tool_today:"Xem hôm nay",tool_cat:"Theo danh mục",tool_csv:"Xuất CSV hôm nay",tool_del:"Xóa (mật khẩu)",
       sum_total:"Tổng",alert_pick:"Hãy chọn món trước",alert_empty:"Chưa có món",
@@ -367,26 +365,18 @@ function t(k){return I18N.ui[LANG][k]||k;}
 function tItemName(id,fallback){return I18N.items[id]?.[LANG]||fallback;}
 
 /* ====== Cloud Sync（Google Apps Script Web 应用接口） ====== */
-/* ====== Cloud Sync（Google Apps Script Web 应用接口） ====== */
 const CLOUD = {
-  // 这里换成你在 Apps Script 部署后得到的 Web 应用 URL
   ENDPOINT: 'https://script.google.com/macros/s/AKfycby84C0cXqeQzruVq9U5MdSCwur8V42yMNTKPW0909cNx1NBUk0LUbPDQrht588HEuUOhA/exec',
-
-  // 必须和代码.gs 里 CONFIG.SECRET 完全一致
   SECRET: 'Lyx115599$api',
-
-  // 你的 Google 表格 ID（固定不变）
   SPREADSHEET_ID: '1mEx1LPaFYsBisXs5mOp-TA_P_9ntfpvMSVzdyKUveKk'
 };
-function getDeviceId(){
-  const k='lyx_device_id';
-  let v=localStorage.getItem(k);
-  if(!v){ v='dev_'+Math.random().toString(36).slice(2); localStorage.setItem(k,v); }
-  return v;
-}
 async function sendToCloud(payload){
   try{
-    const res = await fetch(CLOUD.ENDPOINT, {method:'POST',headers:{'Content-Type':'application/json'},body: JSON.stringify(payload)});
+    const res = await fetch(CLOUD.ENDPOINT, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    });
     const j = await res.json().catch(()=>({ok:false, error:'bad_json'}));
     return j && j.ok;
   }catch(e){ console.warn('cloud failed', e); return false; }
@@ -553,8 +543,8 @@ function showKpis(){
   document.getElementById('kpi-sales').textContent="RM "+(s.sales||0).toFixed(2);
 }
 
-/* ========= 完成并统计 → 本机 + 云端 + WhatsApp ========= */
-function finishAndSend(){
+/* ========= 完成并统计（仅：本机统计 + 云端同步，不再发 WhatsApp） ========= */
+async function finishAndSend(){
   if(Object.keys(cart).length===0){ alert(t('alert_pick')); return; }
 
   const table = document.getElementById('tableNo').value || "-";
@@ -587,32 +577,17 @@ function finishAndSend(){
   saveStats(st);
 
   alert(`已保存到本机统计。\n订单笔数：${st.orders}，销售额：RM ${st.sales.toFixed(2)}。\n将尝试上传到云端…`);
+
   const cloudPayload = {
-    secret: CLOUD.SECRET || '',
-    spreadsheetId: CLOUD.SPREADSHEET_ID || '',
-    table, type, note,
-    lang: LANG,
-    deviceId: getDeviceId(),
+    secret: CLOUD.SECRET,
+    spreadsheetId: CLOUD.SPREADSHEET_ID,
+    table, type, note, lang: LANG,
     items: itemsArr.map(it => ({ id: it.id, name: nameOf(it.id), qty: it.qty, amount: it.amount })),
     total: +subtotal.toFixed(2)
   };
-  sendToCloud(cloudPayload).then(ok=>{
-    if(!ok){ alert('云端上传失败（网络/权限）。本机已保存，稍后再试。'); }
-  });
-
-  const NL = "\n";
-  const msg = [
-    `${t('title_main')} 订单`,
-    `${t('table')}: ${table}`,
-    `${t('type')}: ${type}`, "",
-    LANG==='en'?"Items:":"明细:"
-  ].concat(lines).concat(["",`${t('sum_total')}: RM ${subtotal.toFixed(2)}`, note?(t('note_label')+": "+note):""]).join(NL);
-
-  const url = "https://wa.me/?text=" + encodeURIComponent(msg);
-  let opened=false;
-  try{ window.open(url,'_blank'); opened=true; }catch(e){}
-  if(!opened){ location.href=url; }
-  setTimeout(()=>{ try{ location.href = "whatsapp://send?text=" + encodeURIComponent(msg); }catch(e){} },600);
+  const ok = await sendToCloud(cloudPayload);
+  if(!ok){ alert('云端上传失败（网络/权限）。本机已保存，稍后再试。'); }
+  else   { alert('云端上传成功 ✅'); }
 
   for(const k in cart) delete cart[k];
   renderCart(); showKpis();
@@ -653,7 +628,7 @@ function viewToday(){
   const lines=(st.list||[]).map((r,i)=>{
     const rebuilt = toLines(r);
     return `${i+1}. [${r.time}] ${r.table}/${r.type}\n   ${rebuilt.join("\n   ")}\n   ${I18N.ui.en.sum_total}: RM ${(+r.total).toFixed(2)}${r.note?("\n   "+t('note_label')+": "+r.note):""}`;
-  }).join("\n\n");
+  }).join("\n");
   alert((lines||t('today_none')) + `\n\n${t('k_orders')}: ${st.orders} | ${t('k_items')}: ${st.items} | ${t('k_sales')}: RM ${st.sales.toFixed(2)}`);
 }
 function viewByCategory(){
